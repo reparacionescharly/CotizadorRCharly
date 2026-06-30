@@ -52,6 +52,9 @@
         text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6), 0 0 25px rgba(204, 0, 0, 0.4);
     }
 
+    /* =========================================
+       HEADER Y LOGO
+       ========================================= */
     .header-logo {
         text-align: center;
         margin-bottom: 2rem;
@@ -63,6 +66,9 @@
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
     }
 
+    /* =========================================
+       PANEL PRINCIPAL
+       ========================================= */
     .panel-metal {
         background: linear-gradient(145deg, #151515 0%, #080808 100%);
         border: 2px solid #550000;
@@ -88,49 +94,36 @@
         padding-bottom: 15px;
     }
 
+    /* =========================================
+       IMAGEN CONSOLA (EFECTO 3D Y NEÓN FLOTANTE)
+       ========================================= */
     .left-col {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .device-showcase {
-        width: 200px; 
-        height: 200px;
-        background: radial-gradient(circle, #2a0000 0%, #000 70%);
-        border: 2px solid #800000;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 
-            0 0 20px rgba(255, 0, 0, 0.6), 
-            inset 0 0 20px rgba(255, 0, 0, 0.4),
-            0 5px 15px rgba(0,0,0,0.8);
-        transition: all 0.4s ease;
+    .console-img {
+        width: 250px; /* Tamaño más grande */
+        max-width: 100%;
+        transition: transform 0.4s ease, filter 0.4s ease, opacity 0.3s ease;
+        /* Sombra profunda para el 3D + Resplandor Rojo exacto al contorno */
+        filter: drop-shadow(0 15px 20px rgba(0,0,0,0.9)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.6));
     }
 
-    .device-showcase:hover {
-        border-color: #ff1a1a;
-        box-shadow: 
-            0 0 35px rgba(255, 0, 0, 0.8), 
-            inset 0 0 25px rgba(255, 0, 0, 0.6);
+    .console-img:hover {
+        /* Efecto de saltar hacia adelante */
+        transform: scale(1.1) translateY(-10px);
+        filter: drop-shadow(0 25px 25px rgba(0,0,0,0.9)) drop-shadow(0 0 40px rgba(255, 0, 0, 0.9));
     }
 
-    .device-showcase img {
-        width: 140px; 
-        filter: drop-shadow(0 10px 10px rgba(0,0,0,0.9));
-        transition: transform 0.4s ease, opacity 0.3s ease;
-    }
-
-    .device-showcase:hover img {
-        transform: scale(1.15) translateY(-5px);
-    }
-
+    /* =========================================
+       FORMULARIOS
+       ========================================= */
     .right-col {
         display: flex;
         flex-direction: column;
-        gap: 20px; 
+        gap: 15px; 
     }
 
     .form-group {
@@ -180,59 +173,138 @@
         border: 1px solid rgba(255, 0, 0, 0.2);
     }
 
-    .float-wa {
-        position: fixed;
-        bottom: 35px;
-        right: 35px;
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(145deg, #1f1f1f, #050505);
+    /* =========================================
+       BOTÓN WHATSAPP GRANDE
+       ========================================= */
+    .btn-wa {
+        width: 100%;
+        padding: 16px;
+        margin-top: 10px;
+        background: linear-gradient(135deg, #1a0000, #000000);
         border: 2px solid #cc0000;
-        border-radius: 50%;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(255,0,0,0.3), 0 5px 15px rgba(0,0,0,0.8);
+        transition: all 0.3s ease;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 0 20px rgba(255,0,0,0.6), 0 10px 20px rgba(0,0,0,0.8);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        cursor: pointer;
-        text-decoration: none;
+        gap: 12px;
     }
 
-    .float-wa svg {
-        width: 38px;
-        height: 38px;
-        fill: url(#red-metal-grad); 
-        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9));
+    .btn-wa svg {
+        width: 24px;
+        height: 24px;
+        fill: #ff4d4d;
         transition: all 0.3s ease;
     }
 
-    .float-wa:hover {
-        transform: scale(1.1) rotate(10deg);
+    .btn-wa:hover {
         border-color: #ff1a1a;
-        box-shadow: 0 0 35px rgba(255,0,0,0.9), 0 10px 25px rgba(0,0,0,0.9);
+        box-shadow: 0 0 25px rgba(255,0,0,0.7), 0 10px 20px rgba(0,0,0,0.8);
+        transform: translateY(-3px);
+    }
+    
+    .btn-wa:hover svg {
+        fill: #ff1a1a;
+        transform: scale(1.1) rotate(10deg);
     }
 
+    /* =========================================
+       SECCIÓN DE REDES, UBICACIÓN Y PAGOS
+       ========================================= */
+    .info-panel {
+        background: linear-gradient(145deg, #121212 0%, #050505 100%);
+        border: 1px solid #330000;
+        border-radius: 15px;
+        padding: 20px;
+        width: 100%;
+        max-width: 850px;
+        margin-top: 30px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.9);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .info-card {
+        background: rgba(0,0,0,0.6);
+        border: 1px solid #2a0000;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        border-color: #550000;
+        box-shadow: inset 0 0 15px rgba(255,0,0,0.05);
+    }
+
+    .info-card h3 { 
+        color: #ff4d4d; 
+        font-size: 0.95rem; 
+        margin-bottom: 12px; 
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+    }
+
+    .info-card p, .info-card a { 
+        color: #cccccc; 
+        font-size: 0.85rem; 
+        text-decoration: none; 
+        display: block; 
+        margin-bottom: 6px;
+        line-height: 1.4;
+    }
+
+    .info-card a:hover { 
+        color: #ffffff; 
+        text-shadow: 0 0 8px rgba(255,26,26,0.8); 
+    }
+
+    .social-links { 
+        display: flex; 
+        justify-content: center; 
+        gap: 20px; 
+        margin-top: 15px; 
+    }
+
+    .social-links a {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #ff4d4d;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 2px;
+    }
+
+    .social-links a:hover {
+        color: #fff;
+        border-bottom: 1px solid #ff1a1a;
+    }
+
+    .pago-numero {
+        font-size: 1.1rem !important;
+        font-weight: bold;
+        color: #fff !important;
+        letter-spacing: 2px;
+        margin: 10px 0 !important;
+    }
+
+    /* =========================================
+       RESPONSIVO
+       ========================================= */
     @media(max-width: 700px) {
-        .panel-metal { grid-template-columns: 1fr; gap: 20px; }
-        .device-showcase { width: 160px; height: 160px; margin: auto; }
-        .device-showcase img { width: 110px; }
-        .float-wa { bottom: 25px; right: 25px; width: 60px; height: 60px; }
-        .float-wa svg { width: 32px; height: 32px; }
+        .panel-metal, .info-panel { grid-template-columns: 1fr; gap: 20px; padding: 1.5rem; }
+        .console-img { width: 180px; }
     }
 </style>
 </head>
 <body>
-
-    <svg width="0" height="0" style="position:absolute;">
-        <defs>
-            <linearGradient id="red-metal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff4d4d" />
-                <stop offset="50%" style="stop-color:#b30000" />
-                <stop offset="100%" style="stop-color:#ff1a1a" />
-            </linearGradient>
-        </defs>
-    </svg>
 
     <header class="header-logo">
         <img src="logo1.png" alt="Logo de la Empresa">
@@ -240,42 +312,56 @@
 
     <main class="panel-metal">
         <div class="panel-header">
-            <h1 class="text-metal-silver" style="font-size: 1.8rem; margin-bottom: 5px;">Recepción de Equipos</h1>
+            <h1 class="text-metal-silver" style="font-size: 1.1rem; margin-bottom: 5px;">Recepción de Equipos</h1>
             <p class="text-metal-red neon-text-red" style="font-size: 1rem; font-weight: 700;">Servicio Técnico de Consolas</p>
         </div>
 
         <div class="left-col">
-            <div class="device-showcase">
-                <img id="deviceImg" src="xbox-one.png" alt="Consola">
-            </div>
+            <img id="deviceImg" class="console-img" src="xbox-one.png" alt="Consola">
         </div>
 
         <div class="right-col">
             <div class="form-group">
                 <label class="text-metal-silver">1. Tu Consola</label>
-                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()">
-                </select>
+                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()"></select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">2. Tipo de Servicio</label>
-                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()">
-                </select>
+                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()"></select>
             </div>
 
             <div class="precio-container">
                 <label class="text-metal-silver" style="font-size: 0.75rem;">Costo Estimado</label>
-                <p class="text-metal-red neon-text-red" style="font-size: 1.6rem; font-weight: 900; margin-top: 5px;" id="precioDisplay">$0</p>
+                <p class="text-metal-red neon-text-red" style="font-size: 1.8rem; font-weight: 900; margin-top: 5px;" id="precioDisplay">$0</p>
             </div>
+
+            <button class="btn-wa" onclick="enviarWhatsApp(event)">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                Enviar Cotización
+            </button>
         </div>
     </main>
 
-    <a href="#" onclick="enviarWhatsApp(event)" class="float-wa" title="Enviar solicitud por WhatsApp">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-    </a>
+    <div class="info-panel">
+        <div class="info-card">
+            <h3>📍 Contáctanos</h3>
+            <a href="https://maps.app.goo.gl/qxCagrwpNnx39w6V8?g_st=ac" target="_blank">Ver Ubicación en Mapa</a>
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1EQq6NiLzx/" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/reparacionescharlyb9?igsh=MXc5d3p0OWVjcDJ2OQ==" target="_blank">Instagram</a>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>💳 Métodos de Pago</h3>
+            <p>Aceptamos Mercado Pago</p>
+            <p class="pago-numero">722969020254155883</p>
+            <p>Carlos Francisco Romero Romero</p>
+        </div>
+    </div>
 
     <script>
-        // BASE DE DATOS PLANA (SOLO CONSOLAS)
         const data = {
             "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
             "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
@@ -288,7 +374,7 @@
             "PlayStation 4 (PS4)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 800], ["Lectora", 800], ["Encoder", 1100]],
             "PlayStation 4 Pro (PS4 Pro)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 450], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 900], ["Lectora", 900], ["Encoder", 1100]],
             "PlayStation 5 (PS5)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 1200], ["HDMI", 1200], ["Encoder", 1500], ["Fuente", 1200], ["Cambio fuente", 1800], ["Southbridge", 2500], ["IC/Fusible", 2000]],
-            "Nintendo Switch": [["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500]]
+            "Nintendo Switch": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500], ["Joy-Con Drift", 250]]
         };
 
         const imagenes = {
@@ -306,13 +392,11 @@
             "Nintendo Switch": "switch.png"
         }; 
 
-        // CARGA DIRECTA SIN ESPERAS
         let cbDispositivo = document.getElementById("dispositivo");
         let cbServicio = document.getElementById("servicio");
         let imgDisplay = document.getElementById("deviceImg");
         let precioDisplay = document.getElementById("precioDisplay");
 
-        // 1. Llenar dispositivos de inmediato
         let opciones = Object.keys(data);
         for(let i = 0; i < opciones.length; i++) {
             let op = document.createElement("option");
@@ -322,7 +406,6 @@
         }
         cbDispositivo.selectedIndex = 0; 
 
-        // Funciones
         function cargarServicios() {
             let disp = cbDispositivo.value;
 
@@ -375,7 +458,6 @@
             window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
 
-        // 2. Disparar carga de servicios inicial
         cargarServicios();
     </script>
 </body>
