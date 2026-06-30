@@ -3,346 +3,765 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XE Servicio Electrónico</title>
 
-<title>Cotizador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
 body{
-
-background:linear-gradient(135deg,#050505,#111,#222);
-color:white;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-height:100vh;
-
-}
-
-.contenedor{
-
-width:1000px;
-max-width:95%;
-
-background:linear-gradient(145deg,#181818,#080808);
-
-border-radius:20px;
-
-overflow:hidden;
-
-box-shadow:
-0 0 30px rgba(255,0,0,.3);
-
-}
-
-.header{
-
-height:90px;
-
-background:linear-gradient(90deg,#2b2b2b,#6b6b6b,#2b2b2b);
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-}
-
-.header img{
-
-height:60px;
-
-}
-
-.main{
-
-display:flex;
-
-padding:35px;
-
-gap:40px;
-
-}
-
-.izquierda{
-
-flex:1;
-text-align:center;
-
-}
-
-.izquierda img{
-
-width:280px;
-
-transition:.4s;
-
-}
-
-.izquierda img:hover{
-
-transform:scale(1.05);
-
-}
-
-.izquierda h2{
-
-margin-top:20px;
-
-font-size:28px;
-
-}
-
-.derecha{
-
-flex:1;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-}
-
-button{
-
-background:linear-gradient(#d40000,#840000);
-
-border:none;
-
-padding:18px;
-
-border-radius:12px;
-
-color:white;
-
-font-size:18px;
-
-cursor:pointer;
-
-box-shadow:0 0 15px rgba(255,0,0,.4);
-
-transition:.3s;
-
-}
-
-button:hover{
-
-transform:translateY(-2px);
-
-}
-
-.menu{
-
-margin-top:20px;
-
-display:none;
-
-background:#151515;
-
-border-radius:12px;
-
-overflow:hidden;
-
-border:1px solid #555;
-
-}
-
-.menu div{
-
-padding:16px;
-
-cursor:pointer;
-
-border-bottom:1px solid #333;
-
-transition:.3s;
-
-}
-
-.menu div:hover{
-
-background:#b40000;
-
-}
-
-.lista{
-
-margin-top:30px;
-
-background:#111;
-
-border-radius:12px;
-
+margin:0;
+font-family:'Poppins', 'Segoe UI', Arial, sans-serif;
+background: radial-gradient(circle at top, #0b1528 0%, #06070b 60%, #000000 100%);
+background-attachment:fixed;
+color:#e2e8f0; /* Blanco Platino */
 padding:20px;
+overflow-x:hidden;
+}
 
-min-height:120px;
+/* BARRA SUPERIOR DE BENEFICIOS */
+.top-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background: rgba(6, 7, 11, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 14px 20px;
+    margin: -20px -20px 20px -20px;
+}
 
+.top-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #707e94;
+    font-weight: 500;
+}
+
+.top-bar-item svg {
+    width: 16px;
+    height: 16px;
+    color: #00f2fe;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+position:relative;
+padding:4px;
+border-radius:20px;
+}
+
+/* LOGO ÍCONO XE MÁS GRANDE */
+.logo{
+text-align:center;
+padding: 20px 0;
+}
+
+.logo-img{ 
+width:280px; /* Aumentado de 190px a 280px */
+display:block; 
+margin:auto; 
+filter:drop-shadow(0 6px 20px rgba(0, 114, 255, 0.3)); 
+animation:logoFloat 4s ease-in-out infinite alternate; 
+} 
+
+@keyframes logoFloat{ 
+from{ transform:translateY(0); } 
+to{ transform:translateY(-8px); } 
+} 
+
+/* CONTENEDOR DE CONSOLA MÁS PEQUEÑO */
+.console-box{ 
+display:flex; 
+justify-content:center; 
+margin:25px auto; 
+background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, rgba(0,0,0,0) 70%);
+padding: 20px;
+border-radius: 24px;
+width: 200px; /* Reducido de 320px a 200px */
+height: 200px; /* Reducido de 320px a 200px */
+align-items: center;
+border: 1px solid rgba(0, 242, 254, 0.15);
+box-shadow: 0 0 35px rgba(0, 242, 254, 0.08);
+transition: all 0.5s ease;
+} 
+
+.console-box img{ 
+width:140px; /* Reducido de 260px a 140px */
+max-width:100%; 
+transition: all 0.35s ease; 
+filter:drop-shadow(0 15px 25px rgba(0,0,0,0.8)); 
+} 
+
+.console-box:hover {
+border-color: rgba(0, 242, 254, 0.3);
+box-shadow: 0 0 45px rgba(0, 242, 254, 0.15);
+}
+
+/* CARD PREMIUM */
+.card, .paybox, .reviews-box{
+background: linear-gradient(135deg, rgba(20, 20, 25, 0.85) 0%, rgba(10, 10, 12, 0.95) 100%);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.05);
+padding: 30px;
+margin: 25px 0;
+border-radius: 20px;
+box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* INPUTS Y LABELS PREMIUM (BOTONES DESPLEGABLES) */
+label {
+display: block;
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+color: #00f2fe;
+margin-top: 20px;
+margin-bottom: 8px;
+font-weight: 600;
+}
+
+/* ESTILIZANDO SELECT COMO BOTÓN DESPLEGABLE */
+select,input,textarea{
+width:100%;
+padding: 14px 16px;
+margin: 4px 0 12px 0;
+border-radius:12px;
+border: 1px solid rgba(255, 255, 255, 0.08);
+background:#0d0f16;
+color:white;
+font-family: inherit;
+font-size: 14px;
+box-sizing: border-box;
+transition: all 0.3s ease;
+}
+
+select {
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f2fe' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+background-repeat: no-repeat;
+background-position: right 1rem center;
+background-size: 1em;
+cursor: pointer;
+}
+
+select:hover, input:hover, textarea:hover{
+border-color: rgba(0, 114, 255, 0.4);
+}
+
+select:focus, input:focus, textarea:focus{
+outline:none;
+border-color: #0072ff;
+background: #121520;
+box-shadow: 0 0 0 3px rgba(0, 114, 255, 0.15);
+}
+
+/* BOTONES ELEVADOS Y MODERNOS */
+button, .btn-link-action {
+width:100%;
+padding:16px;
+border:none;
+border-radius:12px;
+font-weight:600;
+font-size:14px;
+font-family: inherit;
+cursor:pointer;
+margin-top:14px;
+transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+box-sizing: border-box;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+}
+
+.wa {
+background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+color: white;
+}
+
+.wa:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(0, 114, 255, 0.35);
+}
+
+.pay {
+background: #121520;
+color: white;
+border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pay:hover {
+border-color: #00f2fe;
+background: #171b29;
+transform: translateY(-2px);
+}
+
+.link {
+background: transparent;
+border: 1px solid rgba(255, 255, 255, 0.06);
+color: #707e94;
+}
+
+.link:hover {
+border-color: rgba(255, 255, 255, 0.2);
+color: white;
+transform: translateY(-1px);
+}
+
+/* BOTÓN DE UBICACIÓN DESTACADO EN CIAN */
+.btn-geo {
+background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+color: #00f2fe;
+border: 1px solid rgba(0, 242, 254, 0.2);
+}
+.btn-geo:hover {
+border-color: #00f2fe;
+box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+transform: translateY(-2px);
+}
+
+/* GRID DE REDES SOCIALES ABAJO */
+.social-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 10px;
+margin-top: 14px;
+}
+.social-grid .btn-link-action {
+margin-top: 0;
+padding: 12px;
+font-size: 12px;
+}
+
+/* RESULTADOS INTERFAZ DE ALTA GAMA */
+.result{
+background: linear-gradient(135deg, rgba(0, 114, 255, 0.1) 0%, rgba(0, 242, 254, 0.05) 100%);
+border: 1px solid rgba(0, 242, 254, 0.2);
+padding: 20px;
+border-radius: 16px;
+margin-top: 25px;
+font-size: 14px;
+}
+
+.result span {
+font-weight: 500;
+color: white;
 }
 
 .total{
-
-margin-top:25px;
-
-font-size:30px;
-
-font-weight:bold;
-
-color:silver;
-
+font-size: 32px;
+font-weight: 700;
+color: #00f2fe;
+margin-top: 14px;
+padding-top: 14px;
+border-top: 1px solid rgba(255, 255, 255, 0.08);
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
-.final{
-
-margin-top:25px;
-
-background:linear-gradient(#f00000,#7b0000);
-
+.total span {
+color: #00f2fe;
 }
 
+/* SECCIÓN DE PAGOS */
+.paybox h3, .reviews-box h3 {
+color: white;
+font-size: 15px;
+font-weight: 600;
+letter-spacing: 0.5px;
+margin-top: 0;
+margin-bottom: 20px;
+text-transform: uppercase;
+}
+
+.payment-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.payment-method {
+background: #0d0f16;
+border: 1px solid rgba(255, 255, 255, 0.04);
+padding: 20px;
+border-radius: 16px;
+}
+
+.payment-method h4 {
+margin: 0 0 8px 0;
+color: #00f2fe;
+font-size: 14px;
+}
+
+.payment-method p {
+margin: 4px 0;
+font-size: 13px;
+color: #707e94;
+}
+
+.payment-method .account-number {
+font-size: 15px;
+color: white;
+font-weight: 600;
+letter-spacing: 0.5px;
+margin: 8px 0;
+}
+
+.paybox hr, .reviews-box hr {
+border: 0;
+height: 1px;
+background: rgba(255, 255, 255, 0.06);
+margin: 20px 0;
+}
+
+/* OPINIONES LOCALES */
+.star-rating-area {
+display: flex;
+gap: 6px;
+margin: 12px 0;
+}
+
+.star-rating-area span {
+font-size: 24px;
+cursor: pointer;
+color: #1e293b;
+}
+
+.star-rating-area span.active, .star-rating-area span:hover {
+color: #eab308;
+}
+
+.reviews-scroll-container {
+max-height: 220px;
+overflow-y: auto;
+margin-top: 20px;
+}
+
+.reviews-scroll-container::-webkit-scrollbar { width: 4px; }
+.reviews-scroll-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+.single-review-card {
+background: rgba(255,255,255,0.02);
+padding: 16px;
+border-radius: 12px;
+margin-bottom: 12px;
+border-left: 3px solid #0072ff;
+}
+
+/* BOTÓN FLOTANTE WHATSAPP */
+.float-wa {
+position: fixed;
+width: 60px;
+height: 60px;
+bottom: 25px;
+right: 25px;
+background-color: #25d366;
+color: #FFF;
+border-radius: 50px;
+text-align: center;
+font-size: 30px;
+box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+z-index: 100;
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+transition: all 0.3s ease;
+}
+
+.float-wa:hover {
+transform: scale(1.1);
+background-color: #20b858;
+}
+
+.float-wa svg {
+width: 32px;
+height: 32px;
+fill: currentColor;
+}
+
+/* RESPONSIVO */
+@media(max-width: 600px){
+body { padding: 10px; }
+.card, .paybox, .reviews-box { padding: 20px; }
+.console-box { width: 160px; height: 160px; } /* Ajuste responsivo extra */
+.console-box img { width: 110px; } /* Ajuste responsivo extra */
+.logo-img { width: 220px; } /* Ajuste responsivo extra */
+.top-bar { display: none; }
+.social-grid { grid-template-columns: 1fr; }
+.payment-grid { grid-template-columns: 1fr; }
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="contenedor">
-
-<div class="header">
-
-<img src="logo1.png">
-
+<div class="top-bar">
+    <div class="top-bar-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        Reparación Profesional
+    </div>
+    <div class="top-bar-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        Garantía en Servicios
+    </div>
+    <div class="top-bar-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+        Refacciones Originales
+    </div>
 </div>
 
-<div class="main">
+<div class="container">
 
-<div class="izquierda">
-
-<img src="xbox-series-s.png">
-
-<h2>Xbox Series S</h2>
-
+<div class="logo"> 
+    <img src="logo.png" class="logo-img"> 
+    <div class="console-box"> 
+        <img id="consoleImg" src="xbox-one.png"> 
+    </div> 
 </div>
 
-<div class="derecha">
+<div class="card">
 
-<button onclick="abrirMenu()">
+<label>Consola</label>
+<select id="consola" onchange="loadServices()"></select>
 
-Seleccionar servicio ▼
+<label>Servicio</label>
+<select id="servicio" onchange="calc()"></select>
 
+<label>Cliente</label>
+<input id="cliente" placeholder="Tu nombre">
+
+<label>Describe tu falla</label>
+<textarea id="obs" rows="3" placeholder="Detalles de la falla de tu consola..."></textarea>
+
+<div class="result">
+💰 Precio: <span id="precio">$0</span><br style="content: ''; margin-bottom: 6px; display: block;">
+⏱ Tiempo: <span id="tiempo">-</span><br>
+<div class="total">TOTAL: <span id="total">$0</span></div>
+</div>
+
+<button class="wa" onclick="sendWA()">📲 Enviar por WhatsApp</button>
+<button class="pay" onclick="agendar()">💳 Anticipo y agendar</button>
+
+<button class="link" onclick="abrirCotizador()">
+🕹 Cotizador de Controles
 </button>
 
-<div class="menu" id="menu">
-
-<div onclick="agregar('Mantenimiento',1000)">
-Mantenimiento
-</div>
-
-<div onclick="agregar('Cambio HDMI',1200)">
-Cambio HDMI
-</div>
-
-<div onclick="agregar('Cambio SSD',1800)">
-Cambio SSD
-</div>
-
-<div onclick="agregar('Retimer HDMI',1800)">
-Retimer HDMI
-</div>
-
-<div onclick="agregar('ESD HDMI',900)">
-ESD HDMI
-</div>
-
-<div onclick="agregar('Fuente de Poder',1500)">
-Fuente de Poder
-</div>
-
-<div onclick="agregar('Diagnóstico',300)">
-Diagnóstico
-</div>
-
-</div>
-
-<div class="lista" id="lista">
-
-Sin servicios agregados.
-
-</div>
-
-<div class="total">
-
-Total: $<span id="total">0</span>
-
-</div>
-
-<button class="final">
-
-Generar Cotización
-
+<button class="link" onclick="abrirTester()">
+🎮 Tester de Controles
 </button>
 
+<a href="https://maps.app.goo.gl/x9gqptSPo6yqdxF1A" target="_blank" class="btn-link-action btn-geo">📍 Ver nuestra ubicación en Google Maps</a>
+
+<div class="social-grid">
+    <a href="https://www.facebook.com/share/1BRU5UUK5c/" target="_blank" class="btn-link-action link">Facebook</a>
+    <a href="https://www.tiktok.com/@xeservicioelectronico?_r=1&_t=ZS-97ZOLYTu5zU" target="_blank" class="btn-link-action link">TikTok</a>
+    <a href="https://youtube.com/@xeservicioelectronico?si=MDtE89WtQbayO_YN" target="_blank" class="btn-link-action link">YouTube</a>
 </div>
 
 </div>
 
+<div class="reviews-box">
+    <h3>⭐ Opiniones de Clientes</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px;">
+        <div>
+            <input id="revName" placeholder="Tu Nombre o Usuario" style="padding: 10px; font-size: 13px;">
+            <div class="star-rating-area" id="starSelector">
+                <span onclick="setRating(1)">★</span>
+                <span onclick="setRating(2)">★</span>
+                <span onclick="setRating(3)">★</span>
+                <span onclick="setRating(4)">★</span>
+                <span onclick="setRating(5)">★</span>
+            </div>
+            <textarea id="revText" rows="2" placeholder="Escribe tu experiencia..." style="padding: 10px; font-size: 13px; margin-bottom: 8px;"></textarea>
+            <button class="pay" onclick="saveReview()" style="padding: 10px; font-size: 12px; margin-top: 5px;">Publicar Opinión</button>
+        </div>
+        <div class="reviews-scroll-container" id="reviewsFeed"></div>
+    </div>
 </div>
+
+<div class="paybox">
+
+<h3>💳 Datos de pago</h3>
+
+<div class="payment-grid">
+    <div class="payment-method">
+        <h4>🏦 Banorte</h4>
+        <div class="account-number">4189 1400 1021 7767</div>
+        <p>Irving Daniel Sánchez</p>
+    </div>
+    <div class="payment-method">
+        <h4>💼 MercadoPago</h4>
+        <div class="account-number">722969020089368829</div>
+        <p>Irving Daniel Sánchez Nava</p>
+    </div>
+</div>
+
+<hr>
+
+<p style="color:#00f2fe; text-align: center; margin-bottom: 0; font-size: 14px; font-weight: 400;">
+Envía comprobante por WhatsApp para confirmar cita
+</p>
+
+</div>
+
+</div>
+
+<a href="https://wa.me/527471731852" target="_blank" class="float-wa">
+    <svg viewBox="0 0 32 32"><path d="M16 2a13 13 0 0 0-11 20l-2 5 5-2a13 13 0 1 0 8-23zm0 2a11 11 0 1 1-6 20l-3 1 1-3a11 11 0 0 1 8-18zm-4 5a1 1 0 0 0-1 1 3 3 0 0 0 1 2 9 9 0 0 0 4 4 3 3 0 0 0 2 1 1 1 0 0 0 1-1l1-2a1 1 0 0 0-1-1l-2-1a1 1 0 0 0-1 0l-1 1a5 5 0 0 1-3-3l1-1a1 1 0 0 0 0-1l-1-2a1 1 0 0 0-1 0z"/></svg>
+</a>
 
 <script>
+let currentRating = 0;
 
-let abierto=false;
+const data = {
 
-let total=0;
+"Xbox One":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",600,"1 Hora"],
+    ["Cambio ventilador",400,"15 Min"],
+    ["Cambio módulo inalámbrico",400,"15 Min"],
+    ["Panel frontal",600,"15 Min"],
+    ["MOSFET",900,"1 Hora"],
+    ["Realtek",900,"40 Min"],
+    ["Filtros o ESD",900,"1 Hora"],
+    ["HDMI",900,"1 Hora"],
+    ["IC Power",1000,"1 Hora"]
+],
 
-let lista=document.getElementById("lista");
+"Xbox One S":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",600,"1 Hora"],
+    ["Ventilador",500,"15 Min"],
+    ["Módulo inalámbrico",500,"15 Min"],
+    ["Panel frontal",600,"15 Min"],
+    ["MOSFET",1000,"1 Hora"],
+    ["Realtek",1000,"40 Min"],
+    ["Filtros",600,"1 Hora"],
+    ["ESD",1200,"1 Hora"],
+    ["HDMI",1000,"1 Hora"],
+    ["IC Power",1200,"1 Hora"],
+    ["Retimer",1000,"1 Hora"],
+    ["Carcasa",800,"30 Min"]
+],
 
-let contenido="";
+"Xbox Series S":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",1200,"1 Hora"],
+    ["HDMI",1300,"1 Hora"],
+    ["Bluetooth",800,"10 Min"],
+    ["WiFi",900,"10 Min"],
+    ["Retimer",1500,"1 Hora"],
+    ["ESD",1800,"4 Hrs"],
+    ["SSD",2300,"2 Hrs"],
+    ["Ethernet",1200,"1 Hora"],
+    ["RAM/APU",2000,"2 Hrs"],
+    ["MOSFET",1500,"2 Hrs"],
+    ["Fuente",900,"3 Hrs"],
+    ["Cambio fuente",1200,"20 Min"],
+    ["Ventilador",1000,"10 Min"]
+],
 
-function abrirMenu(){
+"Xbox Series X":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",1500,"1 Hora"],
+    ["HDMI",1500,"1 Hora"],
+    ["Bluetooth",1000,"10 Min"],
+    ["WiFi",1000,"10 Min"],
+    ["Retimer",1800,"1 Hora"],
+    ["ESD",2200,"5 Hrs"],
+    ["SSD",5000,"2 Hrs"],
+    ["Ethernet",1500,"1 Hora"],
+    ["RAM/APU",2600,"2 Hrs"],
+    ["MOSFET",1800,"2 Hrs"],
+    ["Fuente",1200,"3 Hrs"],
+    ["Cambio fuente",1500,"20 Min"],
+    ["Ventilador",1400,"10 Min"]
+],
 
-abierto=!abierto;
+"PS4":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",700,"1 Hora"],
+    ["Disco 1TB",2000,"1 Hora"],
+    ["Disco 500GB",1600,"1 Hora"],
+    ["HDMI",1000,"1 Hora"],
+    ["Encoder",1100,"1 Hora"],
+    ["Lectora",1000,"2 Hrs"]
+],
 
-document.getElementById("menu").style.display=abierto?"block":"none";
+"PS4 Pro":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",900,"1 Hora"],
+    ["Disco 1TB",2000,"1 Hora"],
+    ["Disco 500GB",1600,"1 Hora"],
+    ["HDMI",1000,"1 Hora"],
+    ["Encoder",1100,"1 Hora"],
+    ["Lectora",1200,"2 Hrs"]
+],
 
+"PS5":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",1500,"1 Hora"],
+    ["SSD chipset",2400,"1 Hora"],
+    ["HDMI",1500,"1 Hora"],
+    ["Encoder",1500,"1 Hora"],
+    ["Fuente",1200,"2 Hrs"],
+    ["Cambio fuente",1800,"30 Min"],
+    ["Southbridge",2500,"3 Hrs"],
+    ["BIOS",2000,"3 Hrs"],
+    ["IC/Fusible",2000,"4 Hrs"]
+],
+
+"Nintendo Switch":[
+    ["Revisión / Diagnóstico",200,"1 a 2 días"],
+    ["Mantenimiento",500,"1 Hora"],
+    ["Puerto de Carga Type-C",700,"1 Hora"],
+    ["Chip de Video M92T36",900,"1 Hora"],
+    ["IC de Carga BQ24193",900,"1 Hora"],
+    ["Pantalla / Touch",1200,"2 Hrs"],
+    ["Lector de Juegos",600,"30 Min"],
+    ["Batería",600,"20 Min"]
+]
+
+};
+
+const imagenes = {
+"Xbox One":"xbox-one.png",
+"Xbox One S":"xbox-one-s.png",
+"Xbox Series S":"xbox-series-s.png",
+"Xbox Series X":"xbox-series-x.png",
+"PS4":"ps4.png",
+"PS4 Pro":"ps4-pro.png",
+"PS5":"ps5.png",
+"Nintendo Switch":"switch.png"
+}; 
+
+let c=document.getElementById("consola");
+let s=document.getElementById("servicio");
+
+Object.keys(data).forEach(x=>{
+let o=document.createElement("option");
+o.value=x;
+o.textContent=x;
+c.appendChild(o);
+});
+
+loadServices();
+renderReviews();
+
+function loadServices(){
+// Transición interna de imagen
+const targetImg = document.getElementById("consoleImg");
+targetImg.style.opacity = 0;
+targetImg.style.transform = "scale(0.9)";
+setTimeout(() => {
+    targetImg.src=imagenes[c.value]; 
+    targetImg.style.opacity = 1;
+    targetImg.style.transform = "scale(1)";
+}, 150);
+
+s.innerHTML="";
+data[c.value].forEach(x=>{
+let o=document.createElement("option");
+o.value=x[0];
+o.textContent=x[0];
+s.appendChild(o);
+});
+calc();
 }
 
-function agregar(nombre,precio){
-
-if(contenido==""){
-
-contenido="";
-
+function calc(){
+let d=data[c.value].find(x=>x[0]===s.value);
+if(d){
+precio.innerText="$"+d[1];
+tiempo.innerText=d[2];
+total.innerText="$"+d[1];
+}
 }
 
-contenido+=`
-<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #333;">
-<span>${nombre}</span>
-<span>$${precio}</span>
-</div>
-`;
-
-lista.innerHTML=contenido;
-
-total+=precio;
-
-document.getElementById("total").innerHTML=total;
-
-document.getElementById("menu").style.display="none";
-
-abierto=false;
-
+function sendWA(){
+let msg=`🎮 XE SERVICIO ELECTRÓNICO\n\n👤 ${cliente.value}\n🕹 ${c.value}\n🔧 ${s.value}\n\n💰 ${total.innerText}\n⏱ ${tiempo.innerText}\n\n📝 ${obs.value}`;
+window.open("https://wa.me/527471731852?text="+encodeURIComponent(msg));
 }
 
-</script>
+function agendar(){
+let msg=`💳 XE SERVICIO ELECTRÓNICO\n\n📅 AGENDAR REPARACIÓN\n\n👤 ${cliente.value}\n🕹 ${c.value}\n🔧 ${s.value}\n\n💰 ${total.innerText}\n💳 Anticipo $200\n\n🏦 Banorte / MercadoPago\nEnviar comprobante`;
+window.open("https://wa.me/527471731852?text="+encodeURIComponent(msg));
+}
 
-</body>
-</html>
+function abrirCotizador(){
+    window.open("https://deathmaskxe.github.io/Tester-Controles/");
+}
+
+function abrirTester(){
+    window.open("https://deathmaskxe.github.io/Tester-de-funcionalidad-controles/");
+}
+
+function setRating(rating) {
+currentRating = rating;
+const stars = document.querySelectorAll('#starSelector span');
+stars.forEach((star, index) => {
+if(index < rating) {
+star.classList.add('active');
+} else {
+star.classList.remove('active');
+}
+});
+}
+
+function saveReview() {
+const nameInput = document.getElementById('revName');
+const textInput = document.getElementById('revText');
+
+if(!nameInput.value.trim() || currentRating === 0 || !textInput.value.trim()) {
+alert('Por favor completa todos los campos y selecciona tu calificación.');
+return;
+}
+
+const newReview = {
+name: nameInput.value.trim(),
+rating: currentRating,
+text: textInput.value.trim(),
+date: new Date().toLocaleDateString()
+};
+
+let reviews = JSON.parse(localStorage.getItem('xe_reviews')) || [];
+reviews.unshift(newReview);
+localStorage.setItem('xe_reviews', JSON.stringify(reviews));
+
+nameInput.value = '';
+textInput.value = '';
+setRating(0);
+
+renderReviews();
+}
+
+function renderReviews() {
+const feed = document.getElementById('reviewsFeed');
+let reviews = JSON.parse(localStorage.getItem('xe_reviews')) || [];
+
+if(reviews.length === 0) {
+feed.innerHTML = `<p style="color:#707e94; font-size:13px; text-align:center; margin-top:20px;">Aún no hay opiniones.</p>`;
+return;
+}
+
+feed.innerHTML = '';
+reviews.forEach(r => {
+let starsHtml = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+feed.innerHTML += `
+<div class="single-review-card">
+<div style="display:flex; justify-content:space-between; font-size:12px; color:#707e94; margin
