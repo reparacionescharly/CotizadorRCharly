@@ -85,8 +85,8 @@
     /* CONSOLA PEQUEÑA */
     .device-showcase {
         margin: 1.5rem auto;
-        width: 120px;
-        height: 120px;
+        width: 150px; /* Un poco más grande por si la imagen original lo requiere */
+        height: 150px;
         background: radial-gradient(circle, #2a0000 0%, #000 70%);
         border: 1px solid #333;
         border-radius: 50%;
@@ -97,7 +97,7 @@
     }
 
     .device-showcase img {
-        width: 85px;
+        width: 110px; /* Ajustado para que quepa bien la consola */
         filter: drop-shadow(0 5px 5px rgba(0,0,0,0.9));
         transition: transform 0.3s ease;
     }
@@ -212,7 +212,7 @@
     .float-wa svg {
         width: 35px;
         height: 35px;
-        fill: url(#red-metal-grad); /* Usando el gradiente SVG definido abajo */
+        fill: url(#red-metal-grad); 
         filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));
     }
 
@@ -237,8 +237,8 @@
     </svg>
 
     <header class="header-logo">
-        <!-- Reemplaza "tu-logo.png" por la ruta de tu logo -->
-        <img src="https://via.placeholder.com/320x100/111/adb5bd?text=LOGO+CLIENTE" alt="Logo de la Empresa">
+        <!-- Logo actualizado -->
+        <img src="logo1.png" alt="Logo de la Empresa">
     </header>
 
     <main class="panel-metal">
@@ -247,15 +247,15 @@
 
         <!-- Contenedor Pequeño para la Consola -->
         <div class="device-showcase">
-            <!-- Reemplaza esta imagen por la de la consola -->
-            <img src="https://via.placeholder.com/85/transparent/ff0000?text=IMG" alt="Consola">
+            <!-- Imagen de consola actualizada -->
+            <img src="xbox-series-s.png" alt="Consola Xbox Series S">
         </div>
 
         <div class="form-group">
             <label class="text-metal-silver">Selecciona tu Dispositivo</label>
             <select class="metal-dropdown" id="dispositivo">
                 <option value="ps5">PlayStation 5</option>
-                <option value="xbox">Xbox Series X</option>
+                <option value="xbox">Xbox Series X|S</option>
                 <option value="nintendo">Nintendo Switch</option>
             </select>
         </div>
