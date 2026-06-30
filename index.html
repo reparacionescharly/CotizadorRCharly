@@ -65,7 +65,7 @@
         max-width: 90vw;
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
         border-radius: 15px; 
-        pointer-events: none; /* Evita que el cliente pause el video */
+        pointer-events: none; /* Evita que el cliente lo pause sin querer */
     }
 
     /* =========================================
@@ -132,8 +132,35 @@
         display: block;
     }
 
-    /* ESTILOS COMPARTIDOS PARA TEXTOS Y SELECTS */
-    .metal-input {
+    /* ESTILO ORIGINAL DE LAS CONSOLAS */
+    .metal-dropdown {
+        width: 100%;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #e0e0e0;
+        background: linear-gradient(to bottom, #262626 0%, #111 100%);
+        border: 1px solid #444;
+        border-left: 3px solid #cc0000; 
+        border-radius: 8px;
+        appearance: none;
+        outline: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.6);
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .metal-dropdown:focus, .metal-dropdown:hover {
+        border-color: #ff1a1a;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
+    }
+
+    /* NUEVO ESTILO SEGURO PARA TEXTO (No daña las opciones) */
+    .metal-text-input {
         width: 100%;
         padding: 14px 18px;
         font-size: 0.95rem;
@@ -149,26 +176,17 @@
         font-family: 'Montserrat', sans-serif;
     }
 
-    .metal-input:focus, .metal-input:hover {
+    .metal-text-input:focus, .metal-text-input:hover {
         border-color: #ff1a1a;
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
     }
-    
-    .metal-input::placeholder {
+
+    .metal-text-input::placeholder {
         color: #777;
         font-weight: 400;
     }
 
-    select.metal-input {
-        appearance: none;
-        cursor: pointer;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-        background-size: 16px;
-    }
-
-    textarea.metal-input {
+    textarea.metal-text-input {
         resize: vertical;
         min-height: 80px;
     }
@@ -214,7 +232,7 @@
     .btn-wa svg {
         width: 24px;
         height: 24px;
-        fill: url(#red-metal-grad);
+        fill: #ff4d4d;
         transition: all 0.3s ease;
     }
 
@@ -225,6 +243,7 @@
     }
     
     .btn-wa:hover svg {
+        fill: #ff1a1a;
         transform: scale(1.1) rotate(10deg);
     }
 
@@ -370,27 +389,26 @@
         </div>
 
         <div class="right-col">
-            
             <div class="form-group">
                 <label class="text-metal-silver">Nombre del Cliente</label>
-                <input type="text" id="nombreCliente" class="metal-input" placeholder="Ej. Juan Pérez">
+                <input type="text" id="nombreCliente" class="metal-text-input" placeholder="Ej. Juan Pérez">
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">1. Tu Consola</label>
-                <select class="metal-input" id="dispositivo" onchange="cargarServicios()">
+                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()">
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">2. Tipo de Servicio</label>
-                <select class="metal-input" id="servicio" onchange="calcularPrecio()">
+                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()">
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">Descripción de la falla</label>
-                <textarea id="fallaEquipo" class="metal-input" placeholder="Describe brevemente qué le pasa a tu equipo..."></textarea>
+                <textarea id="fallaEquipo" class="metal-text-input" placeholder="Describe brevemente qué le pasa a tu equipo..."></textarea>
             </div>
 
             <div class="precio-container">
@@ -504,22 +522,4 @@
             let disp = cbDispositivo.value;
             let srv = cbServicio.value;
             
-            let servicioData = data[disp].find(s => s[0] === srv);
-            
-            if (servicioData) {
-                let precio = servicioData[1];
-                if (precio === "Gratis") {
-                    precioDisplay.innerText = "Gratis";
-                } else {
-                    precioDisplay.innerText = "$" + precio;
-                }
-            }
-        }
-
-        function enviarWhatsApp(e) {
-            e.preventDefault(); 
-            
-            let nombreEl = document.getElementById('nombreCliente');
-            let fallaEl = document.getElementById('fallaEquipo');
-            
-            let nombre = nombreEl && nombreEl.value.trim() !==
+           
