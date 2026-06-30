@@ -65,7 +65,7 @@
         max-width: 90vw;
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
         border-radius: 15px; 
-        pointer-events: none;
+        pointer-events: none; /* Evita que el cliente lo pause sin querer */
     }
 
     /* =========================================
@@ -168,13 +168,12 @@
     }
 
     /* =========================================
-       BOTONES DE ACCIÓN
+       BOTONES DE ACCIÓN (WA + SECUNDARIOS)
        ========================================= */
     .action-buttons {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        margin-top: 10px;
     }
 
     .btn-wa {
@@ -229,7 +228,6 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        text-decoration: none;
     }
 
     .btn-secondary:hover {
@@ -357,12 +355,16 @@
         <div class="right-col">
             <div class="form-group">
                 <label class="text-metal-silver">1. Tu Consola</label>
-                <select class="metal-dropdown" id="dispositivo"></select>
+                <!-- Atributo onchange original restaurado -->
+                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()">
+                </select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">2. Tipo de Servicio</label>
-                <select class="metal-dropdown" id="servicio"></select>
+                <!-- Atributo onchange original restaurado -->
+                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()">
+                </select>
             </div>
 
             <div class="precio-container">
@@ -372,7 +374,7 @@
 
             <div class="action-buttons">
                 <!-- BOTÓN ENVIAR COTIZACIÓN WHATSAPP -->
-                <button class="btn-wa" id="btnWhatsapp">
+                <button class="btn-wa" onclick="enviarWhatsApp(event)">
                     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                     Enviar Cotización
                 </button>
@@ -406,106 +408,105 @@
         </div>
     </div>
 
-    <!-- SCRIPT BLINDADO CON DATOS DE CONSOLAS -->
+    <!-- SCRIPT ORIGINAL RESTAURADO CON TUS CONSOLAS -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // AQUI ESTÁN TUS DATOS DE CONSOLAS ORIGINALES
-            const data = {
-                "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
-                "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
-                "PlayStation 3 (PS3)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Hack", 800], ["ICE video", 750], ["Ventilador", 350]],
-                "Xbox 360": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Chip 100 juegos", 1500], ["ICE video", 750], ["Ventilador", 350], ["Flexor de frente", 350]],
-                "Xbox One": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Panel frontal", 400], ["MOSFET", 750], ["Realtek", 800], ["HDMI", 750], ["Cambio ventilador", 400], ["Cambio módulo inalámbrico", 400], ["Filtros o ESD", 900], ["IC Power", 1000]],
-                "Xbox One S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Ventilador", 450], ["Panel frontal", 400], ["HDMI", 800], ["Módulo inalámbrico", 500], ["MOSFET", 1000], ["Realtek", 1000], ["Filtros", 600], ["ESD", 1200], ["IC Power", 1200], ["Retimer", 1000], ["Carcasa", 800]],
-                "Xbox Series S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 500], ["HDMI", 1000], ["Cambio fuente", 1300], ["Ventilador", 1300], ["Bluetooth", 800], ["WiFi", 900], ["Retimer", 1500], ["Ethernet", 1200], ["RAM/APU", 2000], ["MOSFET", 1500], ["Fuente", 900]],
-                "Xbox Series X": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 700], ["HDMI", 1500], ["Bluetooth", 1000], ["WiFi", 1000], ["Retimer", 1800], ["Ethernet", 1500], ["RAM/APU", 2600], ["MOSFET", 1800], ["Fuente", 1200], ["Cambio fuente", 1500], ["Ventilador", 1400]],
-                "PlayStation 4 (PS4)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 800], ["Lectora", 800], ["Encoder", 1100]],
-                "PlayStation 4 Pro (PS4 Pro)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 450], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 900], ["Lectora", 900], ["Encoder", 1100]],
-                "PlayStation 5 (PS5)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 1200], ["HDMI", 1200], ["Encoder", 1500], ["Fuente", 1200], ["Cambio fuente", 1800], ["Southbridge", 2500], ["IC/Fusible", 2000]],
-                "Nintendo Switch": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500], ["Joy-Con Drift", 250]]
-            };
+        const data = {
+            "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
+            "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
+            "PlayStation 3 (PS3)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Hack", 800], ["ICE video", 750], ["Ventilador", 350]],
+            "Xbox 360": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Chip 100 juegos", 1500], ["ICE video", 750], ["Ventilador", 350], ["Flexor de frente", 350]],
+            "Xbox One": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Panel frontal", 400], ["MOSFET", 750], ["Realtek", 800], ["HDMI", 750], ["Cambio ventilador", 400], ["Cambio módulo inalámbrico", 400], ["Filtros o ESD", 900], ["IC Power", 1000]],
+            "Xbox One S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Ventilador", 450], ["Panel frontal", 400], ["HDMI", 800], ["Módulo inalámbrico", 500], ["MOSFET", 1000], ["Realtek", 1000], ["Filtros", 600], ["ESD", 1200], ["IC Power", 1200], ["Retimer", 1000], ["Carcasa", 800]],
+            "Xbox Series S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 500], ["HDMI", 1000], ["Cambio fuente", 1300], ["Ventilador", 1300], ["Bluetooth", 800], ["WiFi", 900], ["Retimer", 1500], ["Ethernet", 1200], ["RAM/APU", 2000], ["MOSFET", 1500], ["Fuente", 900]],
+            "Xbox Series X": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 700], ["HDMI", 1500], ["Bluetooth", 1000], ["WiFi", 1000], ["Retimer", 1800], ["Ethernet", 1500], ["RAM/APU", 2600], ["MOSFET", 1800], ["Fuente", 1200], ["Cambio fuente", 1500], ["Ventilador", 1400]],
+            "PlayStation 4 (PS4)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 800], ["Lectora", 800], ["Encoder", 1100]],
+            "PlayStation 4 Pro (PS4 Pro)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 450], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 900], ["Lectora", 900], ["Encoder", 1100]],
+            "PlayStation 5 (PS5)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 1200], ["HDMI", 1200], ["Encoder", 1500], ["Fuente", 1200], ["Cambio fuente", 1800], ["Southbridge", 2500], ["IC/Fusible", 2000]],
+            "Nintendo Switch": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500], ["Joy-Con Drift", 250]]
+        };
 
-            const imagenes = {
-                "Retro": "retro.png",
-                "Portátiles": "portatiles.png",
-                "PlayStation 3 (PS3)": "ps3.png",
-                "Xbox 360": "xbox360.png",
-                "Xbox One": "xbox-one.png",
-                "Xbox One S": "xbox-one-s.png",
-                "Xbox Series S": "xbox-series-s.png",
-                "Xbox Series X": "xbox-series-x.png",
-                "PlayStation 4 (PS4)": "ps4.png",
-                "PlayStation 4 Pro (PS4 Pro)": "ps4-pro.png",
-                "PlayStation 5 (PS5)": "ps5.png",
-                "Nintendo Switch": "switch.png"
-            }; 
+        const imagenes = {
+            "Retro": "retro.png",
+            "Portátiles": "portatiles.png",
+            "PlayStation 3 (PS3)": "ps3.png",
+            "Xbox 360": "xbox360.png",
+            "Xbox One": "xbox-one.png",
+            "Xbox One S": "xbox-one-s.png",
+            "Xbox Series S": "xbox-series-s.png",
+            "Xbox Series X": "xbox-series-x.png",
+            "PlayStation 4 (PS4)": "ps4.png",
+            "PlayStation 4 Pro (PS4 Pro)": "ps4-pro.png",
+            "PlayStation 5 (PS5)": "ps5.png",
+            "Nintendo Switch": "switch.png"
+        }; 
 
-            const cbDispositivo = document.getElementById("dispositivo");
-            const cbServicio = document.getElementById("servicio");
-            const imgDisplay = document.getElementById("deviceImg");
-            const precioDisplay = document.getElementById("precioDisplay");
-            const btnWhatsapp = document.getElementById("btnWhatsapp");
+        let cbDispositivo = document.getElementById("dispositivo");
+        let cbServicio = document.getElementById("servicio");
+        let imgDisplay = document.getElementById("deviceImg");
+        let precioDisplay = document.getElementById("precioDisplay");
 
-            // Event Listeners
-            cbDispositivo.addEventListener("change", cargarServicios);
-            cbServicio.addEventListener("change", calcularPrecio);
-            btnWhatsapp.addEventListener("click", enviarWhatsApp);
+        let opciones = Object.keys(data);
+        for(let i = 0; i < opciones.length; i++) {
+            let op = document.createElement("option");
+            op.value = opciones[i];
+            op.textContent = opciones[i];
+            cbDispositivo.appendChild(op);
+        }
+        cbDispositivo.selectedIndex = 0; 
 
-            // Cargar inicial
-            let opciones = Object.keys(data);
-            for(let i = 0; i < opciones.length; i++) {
+        function cargarServicios() {
+            let disp = cbDispositivo.value;
+
+            imgDisplay.style.opacity = 0;
+            setTimeout(() => {
+                imgDisplay.src = imagenes[disp] || "xbox-one.png"; 
+                imgDisplay.style.opacity = 1;
+            }, 150);
+
+            cbServicio.innerHTML = "";
+            let servicios = data[disp];
+            
+            for (let i = 0; i < servicios.length; i++) {
                 let op = document.createElement("option");
-                op.value = opciones[i];
-                op.textContent = opciones[i];
-                cbDispositivo.appendChild(op);
+                op.value = servicios[i][0];
+                op.textContent = servicios[i][0];
+                cbServicio.appendChild(op);
             }
-            cbDispositivo.selectedIndex = 0; 
-            cargarServicios();
+            
+            cbServicio.selectedIndex = 0;
+            calcularPrecio();
+        }
 
-            function cargarServicios() {
-                let disp = cbDispositivo.value;
-
-                imgDisplay.style.opacity = 0;
-                setTimeout(() => {
-                    imgDisplay.src = imagenes[disp] || "xbox-one.png"; 
-                    imgDisplay.style.opacity = 1;
-                }, 150);
-
-                cbServicio.innerHTML = "";
-                let servicios = data[disp];
-                
-                for (let i = 0; i < servicios.length; i++) {
-                    let op = document.createElement("option");
-                    op.value = servicios[i][0];
-                    op.textContent = servicios[i][0];
-                    cbServicio.appendChild(op);
-                }
-                
-                cbServicio.selectedIndex = 0;
-                calcularPrecio();
-            }
-
-            function calcularPrecio() {
-                let disp = cbDispositivo.value;
-                let srv = cbServicio.value;
-                
-                let servicioData = data[disp].find(s => s[0] === srv);
-                
-                if (servicioData) {
-                    let precio = servicioData[1];
-                    if (precio === "Gratis") {
-                        precioDisplay.innerText = "Gratis";
-                    } else {
-                        precioDisplay.innerText = "$" + precio;
-                    }
+        function calcularPrecio() {
+            let disp = cbDispositivo.value;
+            let srv = cbServicio.value;
+            
+            let servicioData = data[disp].find(s => s[0] === srv);
+            
+            if (servicioData) {
+                let precio = servicioData[1];
+                if (precio === "Gratis") {
+                    precioDisplay.innerText = "Gratis";
+                } else {
+                    precioDisplay.innerText = "$" + precio;
                 }
             }
+        }
 
-            function enviarWhatsApp(e) {
-                e.preventDefault(); 
-                
-                const dispositivo = cbDispositivo.value;
-                const servicio = cbServicio.value;
-                const precio = precioDisplay.innerText;
-                
-                const mensaje = `🎮 XE SER
+        function enviarWhatsApp(e) {
+            e.preventDefault(); 
+            
+            const dispositivo = cbDispositivo.value;
+            const servicio = cbServicio.value;
+            const precio = precioDisplay.innerText;
+            
+            const mensaje = `🎮 XE SERVICIO ELECTRÓNICO\n\n¡Hola! Me gustaría agendar un servicio desde la página web.\n\n🕹 *Consola:* ${dispositivo}\n🔧 *Servicio:* ${servicio}\n💰 *Costo Estimado:* ${precio}`;
+            const numero = "523324114355"; 
+            
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+        cargarServicios();
+    </script>
+</body>
+</html>
