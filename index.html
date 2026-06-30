@@ -22,7 +22,7 @@
     body {
         background-color: #050505;
         background-image: 
-            radial-gradient(circle at 50% 0%, #1a0000 0%, #050505 60%),
+            radial-gradient(circle at 50% 0%, #1a0000 0%, #020202 70%),
             repeating-linear-gradient(45deg, #000 0%, #000 2px, #050505 2px, #050505 4px);
         color: #fff;
         min-height: 100vh;
@@ -30,10 +30,11 @@
         flex-direction: column;
         align-items: center;
         padding: 2rem 1rem;
+        overflow-x: hidden;
     }
 
     /* =========================================
-       EFECTOS METÁLICOS (TEXTOS)
+       EFECTOS METÁLICOS Y NEÓN
        ========================================= */
     .text-metal-silver {
         background: linear-gradient(180deg, #f8f9fa 0%, #adb5bd 40%, #495057 50%, #ced4da 60%, #ffffff 100%);
@@ -48,184 +49,217 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-transform: uppercase;
-        filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.8));
+    }
+
+    /* Resplandor Neón Rojo para textos */
+    .neon-text-red {
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6), 0 0 25px rgba(204, 0, 0, 0.4);
     }
 
     /* =========================================
-       CONTENEDORES PRINCIPALES
+       HEADER Y LOGO
        ========================================= */
     .header-logo {
         text-align: center;
         margin-bottom: 2rem;
     }
 
-    /* LOGO GRANDE */
     .header-logo img {
-        width: 320px;
+        width: 350px;
         max-width: 90vw;
-        filter: drop-shadow(0 0 15px rgba(204, 0, 0, 0.5));
+        filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
     }
 
+    /* =========================================
+       PANEL PRINCIPAL (LAYOUT 2 COLUMNAS Y NEÓN)
+       ========================================= */
     .panel-metal {
-        background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-        border: 2px solid #333;
-        border-top: 2px solid #555;
-        border-left: 2px solid #555;
-        border-radius: 15px;
+        background: linear-gradient(145deg, #151515 0%, #080808 100%);
+        border: 2px solid #550000;
+        border-radius: 20px;
         padding: 2.5rem;
         width: 100%;
-        max-width: 500px;
+        max-width: 800px; /* Más ancho para las dos columnas */
+        
+        /* Efecto Neón Rojo en la caja principal */
         box-shadow: 
-            10px 10px 30px rgba(0, 0, 0, 0.9),
-            inset 0 0 20px rgba(0, 0, 0, 0.8),
-            0 0 15px rgba(204, 0, 0, 0.1);
-        text-align: center;
+            0 0 20px rgba(255, 0, 0, 0.3),
+            inset 0 0 15px rgba(255, 0, 0, 0.1),
+            10px 10px 30px rgba(0, 0, 0, 0.9);
+            
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: center;
     }
 
-    /* CONSOLA PEQUEÑA */
+    .panel-header {
+        grid-column: 1 / -1; /* Ocupa todo el ancho superior */
+        text-align: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+        padding-bottom: 15px;
+    }
+
+    /* =========================================
+       COLUMNA IZQUIERDA: CONSOLA Y NEÓN
+       ========================================= */
+    .left-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .device-showcase {
-        margin: 1.5rem auto;
-        width: 150px; /* Un poco más grande por si la imagen original lo requiere */
-        height: 150px;
+        width: 180px; 
+        height: 180px;
         background: radial-gradient(circle, #2a0000 0%, #000 70%);
-        border: 1px solid #333;
+        border: 2px solid #800000;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: inset 0 0 15px rgba(255,0,0,0.2), 0 5px 15px rgba(0,0,0,0.8);
+        
+        /* Resplandor Neón Intenso en la consola */
+        box-shadow: 
+            0 0 20px rgba(255, 0, 0, 0.6), 
+            inset 0 0 20px rgba(255, 0, 0, 0.4),
+            0 5px 15px rgba(0,0,0,0.8);
+        transition: all 0.4s ease;
+    }
+
+    .device-showcase:hover {
+        border-color: #ff1a1a;
+        box-shadow: 
+            0 0 35px rgba(255, 0, 0, 0.8), 
+            inset 0 0 25px rgba(255, 0, 0, 0.6);
     }
 
     .device-showcase img {
-        width: 110px; /* Ajustado para que quepa bien la consola */
-        filter: drop-shadow(0 5px 5px rgba(0,0,0,0.9));
-        transition: transform 0.3s ease;
+        width: 130px; 
+        filter: drop-shadow(0 10px 10px rgba(0,0,0,0.9));
+        transition: transform 0.4s ease;
     }
 
     .device-showcase:hover img {
-        transform: scale(1.1);
+        transform: scale(1.15) translateY(-5px);
     }
 
     /* =========================================
-       FORMULARIO Y DESPLEGABLES METÁLICOS
+       COLUMNA DERECHA: FORMULARIOS
        ========================================= */
+    .right-col {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
     .form-group {
-        margin-bottom: 1.5rem;
         text-align: left;
     }
 
     .form-group label {
         font-size: 0.85rem;
         font-weight: 900;
-        letter-spacing: 1px;
-        margin-bottom: 0.5rem;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.8rem;
         display: block;
     }
 
     .metal-dropdown {
         width: 100%;
-        padding: 12px 15px;
+        padding: 14px 18px;
         font-size: 1rem;
         font-weight: 600;
         color: #e0e0e0;
         background: linear-gradient(to bottom, #262626 0%, #111 100%);
         border: 1px solid #444;
-        border-top: 1px solid #666;
+        border-left: 3px solid #cc0000; /* Detalle asimétrico rojo */
         border-radius: 8px;
         appearance: none;
         outline: none;
         cursor: pointer;
         box-shadow: 0 4px 6px rgba(0,0,0,0.6);
-        /* Flecha personalizada metálica */
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23adb5bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
         background-repeat: no-repeat;
         background-position: right 15px center;
         background-size: 16px;
-    }
-
-    .metal-dropdown:focus {
-        border-color: #cc0000;
-        box-shadow: 0 0 10px rgba(204, 0, 0, 0.4);
-    }
-
-    /* =========================================
-       BOTONES ROJO/PLATA METÁLICOS
-       ========================================= */
-    .btn-metal {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 15px;
-        margin-top: 1rem;
-        font-size: 1.1rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        color: #fff;
-        cursor: pointer;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
         transition: all 0.3s ease;
     }
 
-    .btn-red {
-        background: linear-gradient(to bottom, #ff1a1a 0%, #b30000 50%, #800000 51%, #cc0000 100%);
-        border-top: 1px solid #ff6666;
-        border-bottom: 2px solid #330000;
-        box-shadow: 0 5px 15px rgba(204, 0, 0, 0.3), inset 0 2px 2px rgba(255,255,255,0.2);
-        text-shadow: 0 2px 2px rgba(0,0,0,0.6);
-    }
-
-    .btn-red:hover {
-        background: linear-gradient(to bottom, #ff3333 0%, #cc0000 50%, #990000 51%, #e60000 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(204, 0, 0, 0.5), inset 0 2px 2px rgba(255,255,255,0.3);
-    }
-
-    .btn-red:active {
-        transform: translateY(1px);
-        box-shadow: 0 2px 5px rgba(204, 0, 0, 0.3);
+    .metal-dropdown:focus, .metal-dropdown:hover {
+        border-color: #ff1a1a;
+        /* Neón en el menú desplegable al seleccionarlo */
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
     }
 
     /* =========================================
-       BOTÓN FLOTANTE WHATSAPP
+       BOTÓN FLOTANTE WHATSAPP ÚNICO
        ========================================= */
     .float-wa {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 65px;
-        height: 65px;
-        background: linear-gradient(145deg, #1f1f1f, #0a0a0a);
-        border: 2px solid #555;
+        bottom: 35px;
+        right: 35px;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(145deg, #1f1f1f, #050505);
+        border: 2px solid #cc0000;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.8), 0 0 15px rgba(204,0,0,0.4);
+        /* Neón intenso por defecto en el botón */
+        box-shadow: 0 0 20px rgba(255,0,0,0.6), 0 10px 20px rgba(0,0,0,0.8);
         transition: all 0.3s ease;
         z-index: 1000;
+        cursor: pointer;
+        text-decoration: none;
     }
 
     .float-wa svg {
-        width: 35px;
-        height: 35px;
+        width: 38px;
+        height: 38px;
         fill: url(#red-metal-grad); 
-        filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9));
+        transition: all 0.3s ease;
     }
 
     .float-wa:hover {
-        transform: scale(1.1) rotate(5deg);
-        border-color: #cc0000;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.9), 0 0 25px rgba(204,0,0,0.6);
+        transform: scale(1.1) rotate(10deg);
+        border-color: #ff1a1a;
+        box-shadow: 0 0 35px rgba(255,0,0,0.9), 0 10px 25px rgba(0,0,0,0.9);
+    }
+
+    /* =========================================
+       RESPONSIVO (CELULARES)
+       ========================================= */
+    @media(max-width: 700px) {
+        .panel-metal {
+            grid-template-columns: 1fr; /* Cambia a una sola columna */
+            gap: 20px;
+        }
+        .device-showcase {
+            width: 150px;
+            height: 150px;
+        }
+        .device-showcase img {
+            width: 105px;
+        }
+        .float-wa {
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+        }
+        .float-wa svg {
+            width: 32px;
+            height: 32px;
+        }
     }
 </style>
 </head>
 <body>
 
-    <!-- Definición de gradiente SVG para el ícono de WhatsApp -->
     <svg width="0" height="0" style="position:absolute;">
         <defs>
             <linearGradient id="red-metal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -237,56 +271,55 @@
     </svg>
 
     <header class="header-logo">
-        <!-- Logo actualizado -->
         <img src="logo1.png" alt="Logo de la Empresa">
     </header>
 
     <main class="panel-metal">
-        <h1 class="text-metal-silver" style="font-size: 1.8rem; margin-bottom: 5px;">Recepción de Equipos</h1>
-        <p class="text-metal-red" style="font-size: 0.9rem; font-weight: 700; margin-bottom: 20px;">Servicio Técnico Especializado</p>
-
-        <!-- Contenedor Pequeño para la Consola -->
-        <div class="device-showcase">
-            <!-- Imagen de consola actualizada -->
-            <img src="xbox-series-s.png" alt="Consola Xbox Series S">
+        <div class="panel-header">
+            <h1 class="text-metal-silver" style="font-size: 1.8rem; margin-bottom: 5px;">Recepción de Equipos</h1>
+            <p class="text-metal-red neon-text-red" style="font-size: 1rem; font-weight: 700;">Servicio Técnico Especializado</p>
         </div>
 
-        <div class="form-group">
-            <label class="text-metal-silver">Selecciona tu Dispositivo</label>
-            <select class="metal-dropdown" id="dispositivo">
-                <option value="ps5">PlayStation 5</option>
-                <option value="xbox">Xbox Series X|S</option>
-                <option value="nintendo">Nintendo Switch</option>
-            </select>
+        <div class="left-col">
+            <div class="device-showcase">
+                <img src="xbox-series-s.png" alt="Consola Xbox Series S">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label class="text-metal-silver">Selecciona el Servicio</label>
-            <select class="metal-dropdown" id="servicio">
-                <option value="mantenimiento">Mantenimiento Preventivo</option>
-                <option value="reparacion">Reparación de Hardware</option>
-                <option value="diagnostico">Diagnóstico General</option>
-            </select>
-        </div>
+        <div class="right-col">
+            <div class="form-group">
+                <label class="text-metal-silver">1. Tu Dispositivo</label>
+                <select class="metal-dropdown" id="dispositivo">
+                    <option value="ps5">PlayStation 5</option>
+                    <option value="xbox">Xbox Series X|S</option>
+                    <option value="nintendo">Nintendo Switch</option>
+                </select>
+            </div>
 
-        <!-- Botón de Acción -->
-        <button class="btn-metal btn-red" onclick="enviarWhatsApp()">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            Agendar Servicio
-        </button>
+            <div class="form-group">
+                <label class="text-metal-silver">2. Tipo de Servicio</label>
+                <select class="metal-dropdown" id="servicio">
+                    <option value="mantenimiento">Mantenimiento Preventivo</option>
+                    <option value="reparacion">Reparación de Hardware</option>
+                    <option value="diagnostico">Diagnóstico General</option>
+                </select>
+            </div>
+        </div>
     </main>
 
-    <!-- Botón Flotante Metálico -->
-    <a href="https://wa.me/527471731852" target="_blank" class="float-wa">
+    <a href="#" onclick="enviarWhatsApp(event)" class="float-wa" title="Enviar solicitud por WhatsApp">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
     </a>
 
     <script>
-        function enviarWhatsApp() {
+        function enviarWhatsApp(e) {
+            // Prevenir que la página recargue al hacer clic en un link vacío
+            e.preventDefault(); 
+            
             const dispositivo = document.getElementById('dispositivo').options[document.getElementById('dispositivo').selectedIndex].text;
             const servicio = document.getElementById('servicio').options[document.getElementById('servicio').selectedIndex].text;
             
-            const mensaje = `¡Hola! Me gustaría agendar un servicio.\n\n🎮 *Dispositivo:* ${dispositivo}\n🔧 *Servicio:* ${servicio}`;
+            const mensaje = `¡Hola! Me gustaría agendar un servicio desde la página web.\n\n🎮 *Dispositivo:* ${dispositivo}\n🔧 *Servicio:* ${servicio}`;
             const numero = "527471731852"; 
             
             window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
