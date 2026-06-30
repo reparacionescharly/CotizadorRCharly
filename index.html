@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cotizador</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#050505,#111,#222);
+color:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+height:100vh;
+
+}
+
+.contenedor{
+
+width:1000px;
+max-width:95%;
+
+background:linear-gradient(145deg,#181818,#080808);
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:
+0 0 30px rgba(255,0,0,.3);
+
+}
+
+.header{
+
+height:90px;
+
+background:linear-gradient(90deg,#2b2b2b,#6b6b6b,#2b2b2b);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.header img{
+
+height:60px;
+
+}
+
+.main{
+
+display:flex;
+
+padding:35px;
+
+gap:40px;
+
+}
+
+.izquierda{
+
+flex:1;
+text-align:center;
+
+}
+
+.izquierda img{
+
+width:280px;
+
+transition:.4s;
+
+}
+
+.izquierda img:hover{
+
+transform:scale(1.05);
+
+}
+
+.izquierda h2{
+
+margin-top:20px;
+
+font-size:28px;
+
+}
+
+.derecha{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+}
+
+button{
+
+background:linear-gradient(#d40000,#840000);
+
+border:none;
+
+padding:18px;
+
+border-radius:12px;
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
+box-shadow:0 0 15px rgba(255,0,0,.4);
+
+transition:.3s;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+}
+
+.menu{
+
+margin-top:20px;
+
+display:none;
+
+background:#151515;
+
+border-radius:12px;
+
+overflow:hidden;
+
+border:1px solid #555;
+
+}
+
+.menu div{
+
+padding:16px;
+
+cursor:pointer;
+
+border-bottom:1px solid #333;
+
+transition:.3s;
+
+}
+
+.menu div:hover{
+
+background:#b40000;
+
+}
+
+.lista{
+
+margin-top:30px;
+
+background:#111;
+
+border-radius:12px;
+
+padding:20px;
+
+min-height:120px;
+
+}
+
+.total{
+
+margin-top:25px;
+
+font-size:30px;
+
+font-weight:bold;
+
+color:silver;
+
+}
+
+.final{
+
+margin-top:25px;
+
+background:linear-gradient(#f00000,#7b0000);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<div class="header">
+
+<img src="logo1.png">
+
+</div>
+
+<div class="main">
+
+<div class="izquierda">
+
+<img src="xbox-series-s.png">
+
+<h2>Xbox Series S</h2>
+
+</div>
+
+<div class="derecha">
+
+<button onclick="abrirMenu()">
+
+Seleccionar servicio ▼
+
+</button>
+
+<div class="menu" id="menu">
+
+<div onclick="agregar('Mantenimiento',1000)">
+Mantenimiento
+</div>
+
+<div onclick="agregar('Cambio HDMI',1200)">
+Cambio HDMI
+</div>
+
+<div onclick="agregar('Cambio SSD',1800)">
+Cambio SSD
+</div>
+
+<div onclick="agregar('Retimer HDMI',1800)">
+Retimer HDMI
+</div>
+
+<div onclick="agregar('ESD HDMI',900)">
+ESD HDMI
+</div>
+
+<div onclick="agregar('Fuente de Poder',1500)">
+Fuente de Poder
+</div>
+
+<div onclick="agregar('Diagnóstico',300)">
+Diagnóstico
+</div>
+
+</div>
+
+<div class="lista" id="lista">
+
+Sin servicios agregados.
+
+</div>
+
+<div class="total">
+
+Total: $<span id="total">0</span>
+
+</div>
+
+<button class="final">
+
+Generar Cotización
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let abierto=false;
+
+let total=0;
+
+let lista=document.getElementById("lista");
+
+let contenido="";
+
+function abrirMenu(){
+
+abierto=!abierto;
+
+document.getElementById("menu").style.display=abierto?"block":"none";
+
+}
+
+function agregar(nombre,precio){
+
+if(contenido==""){
+
+contenido="";
+
+}
+
+contenido+=`
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #333;">
+<span>${nombre}</span>
+<span>$${precio}</span>
+</div>
+`;
+
+lista.innerHTML=contenido;
+
+total+=precio;
+
+document.getElementById("total").innerHTML=total;
+
+document.getElementById("menu").style.display="none";
+
+abierto=false;
+
+}
+
+</script>
+
+</body>
+</html>
