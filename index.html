@@ -65,7 +65,7 @@
         max-width: 90vw;
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
         border-radius: 15px; 
-        pointer-events: none; /* Evita que el cliente lo pause sin querer */
+        pointer-events: none;
     }
 
     /* =========================================
@@ -168,7 +168,7 @@
     }
 
     /* =========================================
-       BOTONES DE ACCIÓN (WA + SECUNDARIOS)
+       BOTONES DE ACCIÓN
        ========================================= */
     .action-buttons {
         display: flex;
@@ -339,7 +339,6 @@
     </svg>
 
     <header class="header-logo">
-        <!-- AQUÍ SE INTEGRA EL LOGO EN VIDEO ANIMADO -->
         <video autoplay loop muted playsinline>
             <source src="logo-animado.mp4" type="video/mp4">
         </video>
@@ -378,7 +377,7 @@
                     Enviar Cotización
                 </button>
                 
-                <!-- BOTONES SECUNDARIOS EN CONSOLAS -->
+                <!-- BOTONES SECUNDARIOS -->
                 <button class="btn-secondary" onclick="window.open('https://reparacionescharly.github.io/Cotizadorcontroles-/', '_self')">
                     🕹️ Cotizador de Controles
                 </button>
@@ -407,9 +406,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT BLINDADO Y PROTEGIDO PARA CONSOLAS -->
+    <!-- SCRIPT BLINDADO CON DATOS DE CONSOLAS -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // AQUI ESTÁN TUS DATOS DE CONSOLAS ORIGINALES
             const data = {
                 "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
                 "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
@@ -506,4 +506,6 @@
                 
                 const dispositivo = cbDispositivo.value;
                 const servicio = cbServicio.value;
-                const precio = pre
+                const precio = precioDisplay.innerText;
+                
+                const mensaje = `🎮 XE SER
