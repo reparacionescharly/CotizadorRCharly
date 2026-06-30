@@ -78,7 +78,7 @@
         border-radius: 20px;
         padding: 2.5rem;
         width: 100%;
-        max-width: 800px; 
+        max-width: 850px; 
         box-shadow: 
             0 0 20px rgba(255, 0, 0, 0.3),
             inset 0 0 15px rgba(255, 0, 0, 0.1),
@@ -145,7 +145,7 @@
     .right-col {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px; /* Reducido ligeramente para acomodar 3 campos */
     }
 
     .form-group {
@@ -156,14 +156,14 @@
         font-size: 0.85rem;
         font-weight: 900;
         letter-spacing: 1.5px;
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.6rem;
         display: block;
     }
 
     .metal-dropdown {
         width: 100%;
         padding: 14px 18px;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #e0e0e0;
         background: linear-gradient(to bottom, #262626 0%, #111 100%);
@@ -188,7 +188,7 @@
 
     .precio-container {
         text-align: center;
-        margin-top: 10px;
+        margin-top: 5px;
         background: rgba(0,0,0,0.5);
         border-radius: 8px;
         padding: 15px;
@@ -273,12 +273,20 @@
 
         <div class="right-col">
             <div class="form-group">
-                <label class="text-metal-silver">1. Tu Dispositivo</label>
+                <label class="text-metal-silver">1. Categoría</label>
+                <select class="metal-dropdown" id="categoria" onchange="cargarDispositivos()">
+                    <option value="Consolas">Consolas</option>
+                    <option value="Controles">Controles</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="text-metal-silver">2. Tu Dispositivo</label>
                 <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()"></select>
             </div>
 
             <div class="form-group">
-                <label class="text-metal-silver">2. Tipo de Servicio</label>
+                <label class="text-metal-silver">3. Tipo de Servicio</label>
                 <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()"></select>
             </div>
 
@@ -295,124 +303,26 @@
 
     <script>
         // =========================================
-        // BASE DE DATOS DE PRECIOS Y SERVICIOS
+        // BASE DE DATOS SEPARADA POR CATEGORÍAS
         // =========================================
-        const data = {
-            // CONSOLAS
-            "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
-            "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
-            "PlayStation 3 (PS3)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Hack", 800], ["ICE video", 750], ["Ventilador", 350]],
-            "Xbox 360": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Chip 100 juegos", 1500], ["ICE video", 750], ["Ventilador", 350], ["Flexor de frente", 350]],
-            "Xbox One": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Panel frontal", 400], ["MOSFET", 750], ["Realtek", 800], ["HDMI", 750], ["Cambio ventilador", 400], ["Cambio módulo inalámbrico", 400], ["Filtros o ESD", 900], ["IC Power", 1000]],
-            "Xbox One S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Ventilador", 450], ["Panel frontal", 400], ["HDMI", 800], ["Módulo inalámbrico", 500], ["MOSFET", 1000], ["Realtek", 1000], ["Filtros", 600], ["ESD", 1200], ["IC Power", 1200], ["Retimer", 1000], ["Carcasa", 800]],
-            "Xbox Series S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 500], ["HDMI", 1000], ["Cambio fuente", 1300], ["Ventilador", 1300], ["Bluetooth", 800], ["WiFi", 900], ["Retimer", 1500], ["Ethernet", 1200], ["RAM/APU", 2000], ["MOSFET", 1500], ["Fuente", 900]],
-            "Xbox Series X": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 700], ["HDMI", 1500], ["Bluetooth", 1000], ["WiFi", 1000], ["Retimer", 1800], ["Ethernet", 1500], ["RAM/APU", 2600], ["MOSFET", 1800], ["Fuente", 1200], ["Cambio fuente", 1500], ["Ventilador", 1400]],
-            "PlayStation 4 (PS4)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 800], ["Lectora", 800], ["Encoder", 1100]],
-            "PlayStation 4 Pro (PS4 Pro)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 450], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 900], ["Lectora", 900], ["Encoder", 1100]],
-            "PlayStation 5 (PS5)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 1200], ["HDMI", 1200], ["Encoder", 1500], ["Fuente", 1200], ["Cambio fuente", 1800], ["Southbridge", 2500], ["IC/Fusible", 2000]],
-            "Nintendo Switch": [["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500]],
-            // CONTROLES
-            "Control Xbox One (Fat/S/X)": [["Joystick original", 150], ["Joystick TMR", 250], ["Goma conductiva (botones)", 150], ["D-pad", 150], ["Bumper LB y RB", 250], ["Gatillo hall interno", 250], ["Gatillo plástico", 150], ["Microswich LB y RB", 250], ["Puerto de carga V8", 280], ["Jack de auriculares", 200], ["Capuchón original par (gomas)", 60], ["Limpieza profunda", 80], ["Reparación electrónica", 450], ["Cambio de placa Power", 450], ["Cambio de placa Control", 500], ["Reparación Bluetooth", 450], ["Reballing Microprocesador", 500]],
-            "Control Xbox Series (S/X)": [["Joystick original", 250], ["Joystick TMR", 350], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Gatillo plástico", 150], ["Gatillo hall interno", 300], ["D-pad", 150], ["Puerto tipo C", 300], ["Fallas de encendido", 550], ["Cambio de placa Power", 480], ["Cambio de placa joysticks", 600], ["Fallas de Bluetooth", 450], ["Reballing a microprocesador", 550], ["Capuchon original par (gomas)", 60]],
-            "Control Xbox Elite Series 2": [["Joystick original", 300], ["Joystick TMR", 450], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Mantenimiento Completo y Limpieza", 200], ["Falla en Palancas Traseras (Paddles)", 300]],
-            "Control PS4 (DualShock 4)": [["Joystick", 150], ["Joystick TMR", 250], ["Membrana de botones", 200], ["Centro de carga tipo C / V8", 200], ["Goma condutivas", 200], ["Gatillo aptico", 450], ["Flex gatillo", 300], ["Puerto audífonos", 300], ["Pmic", 600], ["Corto en placa", 500]],
-            "Control PS5 DualSense": [["Joystick", 250], ["Joystick TMR", 350], ["Membrana de botones", 250], ["Goma conductiva", 200], ["Motor adaptativo", 450], ["Motor aptico", 450], ["Gatillo aptico", 450], ["Flex gatillo", 300], ["Centro de carga tipo C", 300], ["Jack de audífonos", 300], ["Pmic", 650], ["Corto en placa", 500]],
-            "Control PS5 DualSense Edge": [["Joystick original", 450], ["Joystick TMR", 600], ["Gatillo adaptative", 700], ["Motor adaptativo", 700], ["Motor haptico", 450], ["Membrana de botones", 500], ["Jack de audífonos", 450], ["Pmic", 1500]],
-            "Nintendo Switch (Joy-Con)": [["Joystick original", 200], ["Joystick TMR", 350], ["Riel", 200], ["Flex vinculación inalámbrica", 350], ["Batería", 400]],
-            "Nintendo Switch Pro Controller": [["Joystick original", 300], ["Joystick TMR", 450], ["Puerto de carga", 400], ["Goma conductiva", 300], ["Corto en placa", 450]]
-        };
-
-        // RUTAS DE IMÁGENES EXACTAS (Renombra así tus archivos en GitHub)
-        const imagenes = {
-            "Retro": "retro.png",
-            "Portátiles": "portatiles.png",
-            "PlayStation 3 (PS3)": "ps3.png",
-            "Xbox 360": "xbox360.png",
-            "Xbox One": "xbox-one.png",
-            "Xbox One S": "xbox-one-s.png",
-            "Xbox Series S": "xbox-series-s.png",
-            "Xbox Series X": "xbox-series-x.png",
-            "PlayStation 4 (PS4)": "ps4.png",
-            "PlayStation 4 Pro (PS4 Pro)": "ps4-pro.png",
-            "PlayStation 5 (PS5)": "ps5.png",
-            "Nintendo Switch": "switch.png",
-            "Control Xbox One (Fat/S/X)": "mando-xbox-one.png",
-            "Control Xbox Series (S/X)": "mando-xbox-series.png",
-            "Control Xbox Elite Series 2": "mando-elite.png",
-            "Control PS4 (DualShock 4)": "mando-ps4.png",
-            "Control PS5 DualSense": "mando-ps5.png",
-            "Control PS5 DualSense Edge": "mando-edge.png",
-            "Nintendo Switch (Joy-Con)": "joycon.png",
-            "Nintendo Switch Pro Controller": "pro-controller.png"
-        }; 
-
-        // Referencias al DOM
-        const cbDispositivo = document.getElementById("dispositivo");
-        const cbServicio = document.getElementById("servicio");
-        const imgDisplay = document.getElementById("deviceImg");
-        const precioDisplay = document.getElementById("precioDisplay");
-
-        // Inicializar el formulario
-        window.onload = function() {
-            cbDispositivo.innerHTML = "";
-            Object.keys(data).forEach(dispositivo => {
-                let op = document.createElement("option");
-                op.value = dispositivo;
-                op.textContent = dispositivo;
-                cbDispositivo.appendChild(op);
-            });
-            // Pre-seleccionar Xbox One (o el primero)
-            cbDispositivo.value = "Xbox One";
-            cargarServicios();
-        };
-
-        function cargarServicios() {
-            // Cambiar imagen
-            imgDisplay.style.opacity = 0;
-            setTimeout(() => {
-                imgDisplay.src = imagenes[cbDispositivo.value]; 
-                imgDisplay.style.opacity = 1;
-            }, 150);
-
-            // Cargar servicios
-            cbServicio.innerHTML = "";
-            data[cbDispositivo.value].forEach(servicio => {
-                let op = document.createElement("option");
-                op.value = servicio[0];
-                op.textContent = servicio[0];
-                cbServicio.appendChild(op);
-            });
-            calcularPrecio();
-        }
-
-        function calcularPrecio() {
-            let dispositivoSelec = cbDispositivo.value;
-            let servicioSelec = cbServicio.value;
-            
-            let servicioData = data[dispositivoSelec].find(s => s[0] === servicioSelec);
-            
-            if (servicioData) {
-                let precio = servicioData[1];
-                if (precio === "Gratis") {
-                    precioDisplay.innerText = "Gratis";
-                } else {
-                    precioDisplay.innerText = "$" + precio;
-                }
-            }
-        }
-
-        function enviarWhatsApp(e) {
-            e.preventDefault(); 
-            
-            const dispositivo = cbDispositivo.value;
-            const servicio = cbServicio.value;
-            const precio = precioDisplay.innerText;
-            
-            const mensaje = `🎮 XE SERVICIO ELECTRÓNICO\n\n¡Hola! Me gustaría agendar un servicio desde la página web.\n\n🕹 *Dispositivo:* ${dispositivo}\n🔧 *Servicio:* ${servicio}\n💰 *Costo Estimado:* ${precio}`;
-            const numero = "527471731852"; 
-            
-            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
-        }
-    </script>
-</body>
-</html>
+        const baseDatos = {
+            "Consolas": {
+                "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
+                "Portátiles": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
+                "PlayStation 3 (PS3)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Hack", 800], ["ICE video", 750], ["Ventilador", 350]],
+                "Xbox 360": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["HDMI", 650], ["Chip 100 juegos", 1500], ["ICE video", 750], ["Ventilador", 350], ["Flexor de frente", 350]],
+                "Xbox One": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Panel frontal", 400], ["MOSFET", 750], ["Realtek", 800], ["HDMI", 750], ["Cambio ventilador", 400], ["Cambio módulo inalámbrico", 400], ["Filtros o ESD", 900], ["IC Power", 1000]],
+                "Xbox One S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Ventilador", 450], ["Panel frontal", 400], ["HDMI", 800], ["Módulo inalámbrico", 500], ["MOSFET", 1000], ["Realtek", 1000], ["Filtros", 600], ["ESD", 1200], ["IC Power", 1200], ["Retimer", 1000], ["Carcasa", 800]],
+                "Xbox Series S": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 500], ["HDMI", 1000], ["Cambio fuente", 1300], ["Ventilador", 1300], ["Bluetooth", 800], ["WiFi", 900], ["Retimer", 1500], ["Ethernet", 1200], ["RAM/APU", 2000], ["MOSFET", 1500], ["Fuente", 900]],
+                "Xbox Series X": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 700], ["HDMI", 1500], ["Bluetooth", 1000], ["WiFi", 1000], ["Retimer", 1800], ["Ethernet", 1500], ["RAM/APU", 2600], ["MOSFET", 1800], ["Fuente", 1200], ["Cambio fuente", 1500], ["Ventilador", 1400]],
+                "PlayStation 4 (PS4)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 800], ["Lectora", 800], ["Encoder", 1100]],
+                "PlayStation 4 Pro (PS4 Pro)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 450], ["Disco 1TB", 1500], ["Disco 500GB", 1000], ["HDMI", 900], ["Lectora", 900], ["Encoder", 1100]],
+                "PlayStation 5 (PS5)": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 1200], ["HDMI", 1200], ["Encoder", 1500], ["Fuente", 1200], ["Cambio fuente", 1800], ["Southbridge", 2500], ["IC/Fusible", 2000]],
+                "Nintendo Switch": [["CHIP 128GB 15 JUEGOS", 1500], ["CHIP 256GB 30 JUEGOS", 1900], ["CHIP 512GB 50 JUEGOS", 2600], ["SOLO CHIP SIN NADA", 900], ["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Batería", 800], ["Puerto de Carga", 800], ["Cambio de Pantalla", 1500]]
+            },
+            "Controles": {
+                "Control Xbox One (Fat/S/X)": [["Joystick original", 150], ["Joystick TMR", 250], ["Goma conductiva (botones)", 150], ["D-pad", 150], ["Bumper LB y RB", 250], ["Gatillo hall interno", 250], ["Gatillo plástico", 150], ["Microswich LB y RB", 250], ["Puerto de carga V8", 280], ["Jack de auriculares", 200], ["Capuchón original par (gomas)", 60], ["Limpieza profunda", 80], ["Reparación electrónica", 450], ["Cambio de placa Power", 450], ["Cambio de placa Control", 500], ["Reparación Bluetooth", 450], ["Reballing Microprocesador", 500]],
+                "Control Xbox Series (S/X)": [["Joystick original", 250], ["Joystick TMR", 350], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Gatillo plástico", 150], ["Gatillo hall interno", 300], ["D-pad", 150], ["Puerto tipo C", 300], ["Fallas de encendido", 550], ["Cambio de placa Power", 480], ["Cambio de placa joysticks", 600], ["Fallas de Bluetooth", 450], ["Reballing a microprocesador", 550], ["Capuchon original par (gomas)", 60]],
+                "Control Xbox Elite Series 2": [["Joystick original", 300], ["Joystick TMR", 450], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Mantenimiento Completo y Limpieza", 200], ["Falla en Palancas Traseras (Paddles)", 300]],
+                "Control PS4 (DualShock 4)": [["Joystick", 150], ["Joystick TMR", 250], ["Membrana de botones", 200], ["
+                                                                                                                       
