@@ -145,7 +145,7 @@
     .right-col {
         display: flex;
         flex-direction: column;
-        gap: 15px; /* Reducido ligeramente para acomodar 3 campos */
+        gap: 15px; 
     }
 
     .form-group {
@@ -324,5 +324,89 @@
                 "Control Xbox One (Fat/S/X)": [["Joystick original", 150], ["Joystick TMR", 250], ["Goma conductiva (botones)", 150], ["D-pad", 150], ["Bumper LB y RB", 250], ["Gatillo hall interno", 250], ["Gatillo plástico", 150], ["Microswich LB y RB", 250], ["Puerto de carga V8", 280], ["Jack de auriculares", 200], ["Capuchón original par (gomas)", 60], ["Limpieza profunda", 80], ["Reparación electrónica", 450], ["Cambio de placa Power", 450], ["Cambio de placa Control", 500], ["Reparación Bluetooth", 450], ["Reballing Microprocesador", 500]],
                 "Control Xbox Series (S/X)": [["Joystick original", 250], ["Joystick TMR", 350], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Gatillo plástico", 150], ["Gatillo hall interno", 300], ["D-pad", 150], ["Puerto tipo C", 300], ["Fallas de encendido", 550], ["Cambio de placa Power", 480], ["Cambio de placa joysticks", 600], ["Fallas de Bluetooth", 450], ["Reballing a microprocesador", 550], ["Capuchon original par (gomas)", 60]],
                 "Control Xbox Elite Series 2": [["Joystick original", 300], ["Joystick TMR", 450], ["Goma conductiva botones", 250], ["Bumper LB y RB", 250], ["Microswich LB y RB", 250], ["Mantenimiento Completo y Limpieza", 200], ["Falla en Palancas Traseras (Paddles)", 300]],
-                "Control PS4 (DualShock 4)": [["Joystick", 150], ["Joystick TMR", 250], ["Membrana de botones", 200], ["
-                                                                                                                       
+                "Control PS4 (DualShock 4)": [["Joystick", 150], ["Joystick TMR", 250], ["Membrana de botones", 200], ["Centro de carga tipo C / V8", 200], ["Goma condutivas", 200], ["Gatillo aptico", 450], ["Flex gatillo", 300], ["Puerto audífonos", 300], ["Pmic", 600], ["Corto en placa", 500]],
+                "Control PS5 DualSense": [["Joystick", 250], ["Joystick TMR", 350], ["Membrana de botones", 250], ["Goma conductiva", 200], ["Motor adaptativo", 450], ["Motor aptico", 450], ["Gatillo aptico", 450], ["Flex gatillo", 300], ["Centro de carga tipo C", 300], ["Jack de audífonos", 300], ["Pmic", 650], ["Corto en placa", 500]],
+                "Control PS5 DualSense Edge": [["Joystick original", 450], ["Joystick TMR", 600], ["Gatillo adaptative", 700], ["Motor adaptativo", 700], ["Motor haptico", 450], ["Membrana de botones", 500], ["Jack de audífonos", 450], ["Pmic", 1500]],
+                "Nintendo Switch (Joy-Con)": [["Joystick original", 200], ["Joystick TMR", 350], ["Riel", 200], ["Flex vinculación inalámbrica", 350], ["Batería", 400]],
+                "Nintendo Switch Pro Controller": [["Joystick original", 300], ["Joystick TMR", 450], ["Puerto de carga", 400], ["Goma conductiva", 300], ["Corto en placa", 450]]
+            }
+        };
+
+        const imagenes = {
+            "Retro": "retro.png",
+            "Portátiles": "portatiles.png",
+            "PlayStation 3 (PS3)": "ps3.png",
+            "Xbox 360": "xbox360.png",
+            "Xbox One": "xbox-one.png",
+            "Xbox One S": "xbox-one-s.png",
+            "Xbox Series S": "xbox-series-s.png",
+            "Xbox Series X": "xbox-series-x.png",
+            "PlayStation 4 (PS4)": "ps4.png",
+            "PlayStation 4 Pro (PS4 Pro)": "ps4-pro.png",
+            "PlayStation 5 (PS5)": "ps5.png",
+            "Nintendo Switch": "switch.png",
+            "Control Xbox One (Fat/S/X)": "xbox-one.png",
+            "Control Xbox Series (S/X)": "xbox-series.png",
+            "Control Xbox Elite Series 2": "elite-series-2.png",
+            "Control PS4 (DualShock 4)": "dualshock-4.png",
+            "Control PS5 DualSense": "dualsense.png",
+            "Control PS5 DualSense Edge": "dualsense-edge.png",
+            "Nintendo Switch (Joy-Con)": "joycon.png",
+            "Nintendo Switch Pro Controller": "pro-controller.png"
+        }; 
+
+        const cbCategoria = document.getElementById("categoria");
+        const cbDispositivo = document.getElementById("dispositivo");
+        const cbServicio = document.getElementById("servicio");
+        const imgDisplay = document.getElementById("deviceImg");
+        const precioDisplay = document.getElementById("precioDisplay");
+
+        // Funciones principales
+        function cargarDispositivos() {
+            let categoriaSeleccionada = cbCategoria.value;
+            cbDispositivo.innerHTML = ""; 
+            
+            // Llenar dispositivos según la categoría elegida
+            for (let dispositivo in baseDatos[categoriaSeleccionada]) {
+                let op = document.createElement("option");
+                op.value = dispositivo;
+                op.textContent = dispositivo;
+                cbDispositivo.appendChild(op);
+            }
+            
+            cbDispositivo.selectedIndex = 0; 
+            cargarServicios();
+        }
+
+        function cargarServicios() {
+            let categoriaSeleccionada = cbCategoria.value;
+            let dispositivoSeleccionado = cbDispositivo.value;
+
+            if (!dispositivoSeleccionado) return; // Evitar errores si está vacío
+
+            // Cambio de imagen con efecto
+            imgDisplay.style.opacity = 0;
+            setTimeout(() => {
+                imgDisplay.src = imagenes[dispositivoSeleccionado] || "xbox-one.png"; 
+                imgDisplay.style.opacity = 1;
+            }, 150);
+
+            // Llenar servicios según el dispositivo elegido
+            cbServicio.innerHTML = "";
+            let serviciosDelDispositivo = baseDatos[categoriaSeleccionada][dispositivoSeleccionado];
+            
+            for (let i = 0; i < serviciosDelDispositivo.length; i++) {
+                let op = document.createElement("option");
+                op.value = serviciosDelDispositivo[i][0];
+                op.textContent = serviciosDelDispositivo[i][0];
+                cbServicio.appendChild(op);
+            }
+            
+            cbServicio.selectedIndex = 0;
+            calcularPrecio();
+        }
+
+        function calcularPrecio() {
+            let categoriaSeleccionada = cbCategoria.value;
+            let dispositivoSelec = cbDispositivo.value;
+            let servicioSele
