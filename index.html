@@ -33,9 +33,6 @@
         overflow-x: hidden;
     }
 
-    /* =========================================
-       EFECTOS METÁLICOS Y NEÓN
-       ========================================= */
     .text-metal-silver {
         background: linear-gradient(180deg, #f8f9fa 0%, #adb5bd 40%, #495057 50%, #ced4da 60%, #ffffff 100%);
         -webkit-background-clip: text;
@@ -55,9 +52,6 @@
         text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6), 0 0 25px rgba(204, 0, 0, 0.4);
     }
 
-    /* =========================================
-       HEADER Y LOGO
-       ========================================= */
     .header-logo {
         text-align: center;
         margin-bottom: 2rem;
@@ -69,9 +63,6 @@
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
     }
 
-    /* =========================================
-       PANEL PRINCIPAL
-       ========================================= */
     .panel-metal {
         background: linear-gradient(145deg, #151515 0%, #080808 100%);
         border: 2px solid #550000;
@@ -97,9 +88,6 @@
         padding-bottom: 15px;
     }
 
-    /* =========================================
-       COLUMNA IZQUIERDA
-       ========================================= */
     .left-col {
         display: flex;
         justify-content: center;
@@ -139,9 +127,6 @@
         transform: scale(1.15) translateY(-5px);
     }
 
-    /* =========================================
-       COLUMNA DERECHA
-       ========================================= */
     .right-col {
         display: flex;
         flex-direction: column;
@@ -195,9 +180,6 @@
         border: 1px solid rgba(255, 0, 0, 0.2);
     }
 
-    /* =========================================
-       BOTÓN FLOTANTE WHATSAPP
-       ========================================= */
     .float-wa {
         position: fixed;
         bottom: 35px;
@@ -231,9 +213,6 @@
         box-shadow: 0 0 35px rgba(255,0,0,0.9), 0 10px 25px rgba(0,0,0,0.9);
     }
 
-    /* =========================================
-       RESPONSIVO
-       ========================================= */
     @media(max-width: 700px) {
         .panel-metal { grid-template-columns: 1fr; gap: 20px; }
         .device-showcase { width: 160px; height: 160px; margin: auto; }
@@ -282,12 +261,14 @@
 
             <div class="form-group">
                 <label class="text-metal-silver">2. Tu Dispositivo</label>
-                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()"></select>
+                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()">
+                </select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">3. Tipo de Servicio</label>
-                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()"></select>
+                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()">
+                </select>
             </div>
 
             <div class="precio-container">
@@ -302,9 +283,6 @@
     </a>
 
     <script>
-        // =========================================
-        // BASE DE DATOS SEPARADA POR CATEGORÍAS
-        // =========================================
         const baseDatos = {
             "Consolas": {
                 "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
@@ -355,22 +333,22 @@
             "Nintendo Switch Pro Controller": "pro-controller.png"
         }; 
 
-        const cbCategoria = document.getElementById("categoria");
-        const cbDispositivo = document.getElementById("dispositivo");
-        const cbServicio = document.getElementById("servicio");
-        const imgDisplay = document.getElementById("deviceImg");
-        const precioDisplay = document.getElementById("precioDisplay");
+        // Referencias al DOM (Asignación directa)
+        let cbCategoria = document.getElementById("categoria");
+        let cbDispositivo = document.getElementById("dispositivo");
+        let cbServicio = document.getElementById("servicio");
+        let imgDisplay = document.getElementById("deviceImg");
+        let precioDisplay = document.getElementById("precioDisplay");
 
-        // Funciones principales
         function cargarDispositivos() {
             let categoriaSeleccionada = cbCategoria.value;
             cbDispositivo.innerHTML = ""; 
             
-            // Llenar dispositivos según la categoría elegida
-            for (let dispositivo in baseDatos[categoriaSeleccionada]) {
+            let opciones = Object.keys(baseDatos[categoriaSeleccionada]);
+            for(let i = 0; i < opciones.length; i++) {
                 let op = document.createElement("option");
-                op.value = dispositivo;
-                op.textContent = dispositivo;
+                op.value = opciones[i];
+                op.textContent = opciones[i];
                 cbDispositivo.appendChild(op);
             }
             
@@ -382,16 +360,12 @@
             let categoriaSeleccionada = cbCategoria.value;
             let dispositivoSeleccionado = cbDispositivo.value;
 
-            if (!dispositivoSeleccionado) return; // Evitar errores si está vacío
-
-            // Cambio de imagen con efecto
             imgDisplay.style.opacity = 0;
             setTimeout(() => {
                 imgDisplay.src = imagenes[dispositivoSeleccionado] || "xbox-one.png"; 
                 imgDisplay.style.opacity = 1;
             }, 150);
 
-            // Llenar servicios según el dispositivo elegido
             cbServicio.innerHTML = "";
             let serviciosDelDispositivo = baseDatos[categoriaSeleccionada][dispositivoSeleccionado];
             
@@ -409,4 +383,32 @@
         function calcularPrecio() {
             let categoriaSeleccionada = cbCategoria.value;
             let dispositivoSelec = cbDispositivo.value;
-            let servicioSele
+            let servicioSelec = cbServicio.value;
+            
+            let servicioData = baseDatos[categoriaSeleccionada][dispositivoSelec].find(s => s[0] === servicioSelec);
+            
+            if (servicioData) {
+                let precio = servicioData[1];
+                if (precio === "Gratis") {
+                    precioDisplay.innerText = "Gratis";
+                } else {
+                    precioDisplay.innerText = "$" + precio;
+                }
+            }
+        }
+
+        function enviarWhatsApp(e) {
+            e.preventDefault(); 
+            
+            const categoria = cbCategoria.value;
+            const dispositivo = cbDispositivo.value;
+            const servicio = cbServicio.value;
+            const precio = precioDisplay.innerText;
+            
+            const mensaje = `🎮 XE SERVICIO ELECTRÓNICO\n\n¡Hola! Me gustaría agendar un servicio desde la página web.\n\n📂 *Categoría:* ${categoria}\n🕹 *Dispositivo:* ${dispositivo}\n🔧 *Servicio:* ${servicio}\n💰 *Costo Estimado:* ${precio}`;
+            const numero = "527471731852"; 
+            
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+     
