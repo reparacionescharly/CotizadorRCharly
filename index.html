@@ -65,7 +65,7 @@
         max-width: 90vw;
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
         border-radius: 15px; 
-        pointer-events: none; /* Evita que el cliente lo pause sin querer */
+        pointer-events: none;
     }
 
     /* =========================================
@@ -159,7 +159,7 @@
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
     }
 
-    /* NUEVO ESTILO SEGURO PARA TEXTO (No daña las opciones) */
+    /* NUEVO ESTILO PARA TEXTO (No daña las opciones) */
     .metal-text-input {
         width: 100%;
         padding: 14px 18px;
@@ -201,7 +201,7 @@
     }
 
     /* =========================================
-       BOTONES DE ACCIÓN (WA + SECUNDARIOS)
+       BOTONES DE ACCIÓN
        ========================================= */
     .action-buttons {
         display: flex;
@@ -232,7 +232,7 @@
     .btn-wa svg {
         width: 24px;
         height: 24px;
-        fill: #ff4d4d;
+        fill: url(#red-metal-grad);
         transition: all 0.3s ease;
     }
 
@@ -243,7 +243,6 @@
     }
     
     .btn-wa:hover svg {
-        fill: #ff1a1a;
         transform: scale(1.1) rotate(10deg);
     }
 
@@ -362,16 +361,6 @@
 </head>
 <body>
 
-    <svg width="0" height="0" style="position:absolute;">
-        <defs>
-            <linearGradient id="red-metal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff4d4d" />
-                <stop offset="50%" style="stop-color:#b30000" />
-                <stop offset="100%" style="stop-color:#ff1a1a" />
-            </linearGradient>
-        </defs>
-    </svg>
-
     <header class="header-logo">
         <video autoplay loop muted playsinline>
             <source src="logo-animado.mp4" type="video/mp4">
@@ -450,6 +439,16 @@
         </div>
     </div>
 
+    <svg width="0" height="0" style="display: none;">
+        <defs>
+            <linearGradient id="red-metal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#ff4d4d" />
+                <stop offset="50%" style="stop-color:#b30000" />
+                <stop offset="100%" style="stop-color:#ff1a1a" />
+            </linearGradient>
+        </defs>
+    </svg>
+
     <script>
         const data = {
             "Retro": [["Revisión / Diagnóstico", "Gratis"], ["Mantenimiento", 400], ["Cambio de componentes", 600]],
@@ -522,4 +521,6 @@
             let disp = cbDispositivo.value;
             let srv = cbServicio.value;
             
-           
+            let servicioData = data[disp].find(s => s[0] === srv);
+            
+            if (se
