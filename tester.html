@@ -293,30 +293,6 @@
         box-shadow: 0 0 15px rgba(255,0,0,0.8);
     }
 
-    /* BOTÓN REGRESAR */
-    .btn-return {
-        width: 100%;
-        max-width: 900px;
-        padding: 16px;
-        margin-top: 20px;
-        background: linear-gradient(135deg, #111, #050505);
-        border: 1px solid #444;
-        border-radius: 10px;
-        color: #ccc;
-        font-size: 0.9rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-    }
-
-    .btn-return:hover {
-        border-color: #ff4d4d;
-        color: #fff;
-        box-shadow: 0 0 15px rgba(255,0,0,0.3);
-    }
-
     @media(max-width: 700px) {
         .tester-grid { grid-template-columns: 1fr; }
         .buttons-grid { grid-template-columns: repeat(3, 1fr); }
@@ -413,10 +389,6 @@
             </div>
         </div>
     </main>
-
-    <button class="btn-return" onclick="window.open('controles.html', '_self')">
-        ◀ Regresar al Cotizador
-    </button>
 
     <script>
         let animationFrame;
