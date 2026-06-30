@@ -52,20 +52,25 @@
         text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6), 0 0 25px rgba(204, 0, 0, 0.4);
     }
 
+    /* =========================================
+       HEADER Y LOGO ANIMADO
+       ========================================= */
     .header-logo {
         text-align: center;
         margin-bottom: 2rem;
     }
 
-    /* Modificado para soportar video */
     .header-logo img, .header-logo video {
         width: 350px;
         max-width: 90vw;
         filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
         border-radius: 15px; 
-        pointer-events: none;
+        pointer-events: none; /* Evita que el cliente pause el video */
     }
 
+    /* =========================================
+       PANEL PRINCIPAL
+       ========================================= */
     .panel-metal {
         background: linear-gradient(145deg, #151515 0%, #080808 100%);
         border: 2px solid #550000;
@@ -127,35 +132,8 @@
         display: block;
     }
 
-    /* CLASE ORIGINAL INTACTA */
-    .metal-dropdown {
-        width: 100%;
-        padding: 14px 18px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #e0e0e0;
-        background: linear-gradient(to bottom, #262626 0%, #111 100%);
-        border: 1px solid #444;
-        border-left: 3px solid #cc0000; 
-        border-radius: 8px;
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.6);
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-        background-size: 16px;
-        transition: all 0.3s ease;
-    }
-
-    .metal-dropdown:focus, .metal-dropdown:hover {
-        border-color: #ff1a1a;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
-    }
-
-    /* NUEVA CLASE PARA TEXTOS (Para no dañar las opciones) */
-    .metal-text-input {
+    /* ESTILOS COMPARTIDOS PARA TEXTOS Y SELECTS */
+    .metal-input {
         width: 100%;
         padding: 14px 18px;
         font-size: 0.95rem;
@@ -171,12 +149,26 @@
         font-family: 'Montserrat', sans-serif;
     }
 
-    .metal-text-input:focus, .metal-text-input:hover {
+    .metal-input:focus, .metal-input:hover {
         border-color: #ff1a1a;
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.5), inset 0 0 5px rgba(255,0,0,0.2);
     }
+    
+    .metal-input::placeholder {
+        color: #777;
+        font-weight: 400;
+    }
 
-    textarea.metal-text-input {
+    select.metal-input {
+        appearance: none;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 16px;
+    }
+
+    textarea.metal-input {
         resize: vertical;
         min-height: 80px;
     }
@@ -190,10 +182,14 @@
         border: 1px solid rgba(255, 0, 0, 0.2);
     }
 
+    /* =========================================
+       BOTONES DE ACCIÓN (WA + SECUNDARIOS)
+       ========================================= */
     .action-buttons {
         display: flex;
         flex-direction: column;
         gap: 12px;
+        margin-top: 10px;
     }
 
     .btn-wa {
@@ -218,7 +214,7 @@
     .btn-wa svg {
         width: 24px;
         height: 24px;
-        fill: #ff4d4d;
+        fill: url(#red-metal-grad);
         transition: all 0.3s ease;
     }
 
@@ -229,7 +225,6 @@
     }
     
     .btn-wa:hover svg {
-        fill: #ff1a1a;
         transform: scale(1.1) rotate(10deg);
     }
 
@@ -249,6 +244,7 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
+        text-decoration: none;
     }
 
     .btn-secondary:hover {
@@ -258,6 +254,9 @@
         transform: translateY(-2px);
     }
 
+    /* =========================================
+       SECCIÓN DE REDES, UBICACIÓN Y PAGOS
+       ========================================= */
     .info-panel {
         background: linear-gradient(145deg, #121212 0%, #050505 100%);
         border: 1px solid #330000;
@@ -344,6 +343,16 @@
 </head>
 <body>
 
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <linearGradient id="red-metal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#ff4d4d" />
+                <stop offset="50%" style="stop-color:#b30000" />
+                <stop offset="100%" style="stop-color:#ff1a1a" />
+            </linearGradient>
+        </defs>
+    </svg>
+
     <header class="header-logo">
         <video autoplay loop muted playsinline>
             <source src="logo-animado.mp4" type="video/mp4">
@@ -361,28 +370,27 @@
         </div>
 
         <div class="right-col">
-            <!-- NUEVO CAMPO: Nombre -->
+            
             <div class="form-group">
                 <label class="text-metal-silver">Nombre del Cliente</label>
-                <input type="text" id="nombreCliente" class="metal-text-input" placeholder="Ej. Juan Pérez">
+                <input type="text" id="nombreCliente" class="metal-input" placeholder="Ej. Juan Pérez">
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">1. Tu Consola</label>
-                <select class="metal-dropdown" id="dispositivo" onchange="cargarServicios()">
+                <select class="metal-input" id="dispositivo" onchange="cargarServicios()">
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="text-metal-silver">2. Tipo de Servicio</label>
-                <select class="metal-dropdown" id="servicio" onchange="calcularPrecio()">
+                <select class="metal-input" id="servicio" onchange="calcularPrecio()">
                 </select>
             </div>
 
-            <!-- NUEVO CAMPO: Falla -->
             <div class="form-group">
                 <label class="text-metal-silver">Descripción de la falla</label>
-                <textarea id="fallaEquipo" class="metal-text-input" placeholder="Describe brevemente qué le pasa a tu equipo..."></textarea>
+                <textarea id="fallaEquipo" class="metal-input" placeholder="Describe brevemente qué le pasa a tu equipo..."></textarea>
             </div>
 
             <div class="precio-container">
@@ -391,13 +399,11 @@
             </div>
 
             <div class="action-buttons">
-                <!-- BOTÓN ENVIAR COTIZACIÓN WHATSAPP -->
                 <button class="btn-wa" onclick="enviarWhatsApp(event)">
                     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                     Enviar Cotización
                 </button>
                 
-                <!-- BOTONES SECUNDARIOS -->
                 <button class="btn-secondary" onclick="window.open('https://reparacionescharly.github.io/Cotizadorcontroles-/', '_self')">
                     🕹️ Cotizador de Controles
                 </button>
@@ -516,8 +522,4 @@
             let nombreEl = document.getElementById('nombreCliente');
             let fallaEl = document.getElementById('fallaEquipo');
             
-            let nombre = nombreEl && nombreEl.value.trim() !== "" ? nombreEl.value.trim() : "No especificado";
-            let falla = fallaEl && fallaEl.value.trim() !== "" ? fallaEl.value.trim() : "No especificada";
-            
-            const dispositivo = cbDispositivo.value;
-            const servicio = cbServicio.val
+            let nombre = nombreEl && nombreEl.value.trim() !==
